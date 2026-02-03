@@ -1,9 +1,8 @@
 export const resumeData = {
   personal: {
-    name: '정승현',
+    name: 'jshsakura',
     title: '프리랜서 개발자',
     tagline: '"훌륭한 목수는 보이지 않는 곳이라고 해서 썩은 나무를 덧대지 않는다."',
-    email: 'jshsakura@gmail.com',
     github: 'https://github.com/jshsakura',
     location: 'Seoul, Korea',
   },

@@ -19,33 +19,16 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const mailtoLink = `mailto:${resumeData.personal.email}?subject=Contact from ${formData.name}&body=${encodeURIComponent(
-      `From: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    )}`
-    window.location.href = mailtoLink
+    const issueBody = encodeURIComponent(
+      `**From:** ${formData.name}\n**Email:** ${formData.email}\n\n**Message:**\n${formData.message}`
+    )
+    window.open(
+      `https://github.com/jshsakura/jshsakura.github.io/issues/new?title=Contact from ${encodeURIComponent(formData.name)}&body=${issueBody}`,
+      '_blank'
+    )
   }
 
   const contactInfo = [
-    {
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
-      ),
-      label: 'Email',
-      value: resumeData.personal.email,
-      href: `mailto:${resumeData.personal.email}`,
-    },
     {
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -196,7 +179,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.98 }}
                 className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg font-medium hover:shadow-lg hover:shadow-indigo-500/30 transition-all"
               >
-                메일 보내기
+                문의하기
               </motion.button>
             </form>
           </motion.div>
