@@ -8,9 +8,7 @@
   --color-neon-blue: #3b82f6;
 }
 
-* {
-  margin: 0;
-  padding: 0;
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
