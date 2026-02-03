@@ -102,12 +102,12 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
           </mesh>
 
           {/* Legs */}
-          <mesh position={[-0.12, 0.18, 0]}>
-            <capsuleGeometry args={[0.08, 0.15, 8, 16]} />
+          <mesh position={[-0.12, 0.2, 0]}>
+            <circleGeometry args={[0.1, 32]} />
             <meshBasicMaterial color={pantsColor} />
           </mesh>
-          <mesh position={[0.12, 0.18, 0]}>
-            <capsuleGeometry args={[0.08, 0.15, 8, 16]} />
+          <mesh position={[0.12, 0.2, 0]}>
+            <circleGeometry args={[0.1, 32]} />
             <meshBasicMaterial color={pantsColor} />
           </mesh>
 
@@ -127,27 +127,41 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
             <meshBasicMaterial color={skinColor} />
           </mesh>
 
-          {/* Hair back */}
-          <mesh position={[0, 1.3, -0.02]}>
-            <circleGeometry args={[0.42, 32]} />
+          {/* Hair - full coverage */}
+          <mesh position={[0, 1.2, -0.02]}>
+            <circleGeometry args={[0.48, 32]} />
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
-          {/* Hair bangs */}
-          <mesh position={[0, 1.4, 0.01]}>
-            <circleGeometry args={[0.35, 32, 0, Math.PI]} />
+          {/* Hair top */}
+          <mesh position={[0, 1.45, 0]}>
+            <circleGeometry args={[0.35, 32]} />
+            <meshBasicMaterial color={hairColor} />
+          </mesh>
+
+          {/* Hair bangs - fluffy */}
+          <mesh position={[-0.15, 1.35, 0.01]}>
+            <circleGeometry args={[0.18, 32]} />
+            <meshBasicMaterial color={hairColor} />
+          </mesh>
+          <mesh position={[0.15, 1.35, 0.01]}>
+            <circleGeometry args={[0.18, 32]} />
+            <meshBasicMaterial color={hairColor} />
+          </mesh>
+          <mesh position={[0, 1.38, 0.01]}>
+            <circleGeometry args={[0.15, 32]} />
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
           {/* Hair side left */}
-          <mesh position={[-0.35, 1.15, 0.01]} scale={[0.5, 1, 1]}>
-            <circleGeometry args={[0.25, 32]} />
+          <mesh position={[-0.38, 1.1, 0.01]} scale={[0.6, 1.2, 1]}>
+            <circleGeometry args={[0.22, 32]} />
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
           {/* Hair side right */}
-          <mesh position={[0.35, 1.15, 0.01]} scale={[0.5, 1, 1]}>
-            <circleGeometry args={[0.25, 32]} />
+          <mesh position={[0.38, 1.1, 0.01]} scale={[0.6, 1.2, 1]}>
+            <circleGeometry args={[0.22, 32]} />
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
@@ -224,18 +238,12 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
           </mesh>
 
           {/* Arms */}
-          <mesh
-            position={[-0.4, 0.6, 0]}
-            rotation={[0, 0, isMoving ? Math.sin(bounceRef.current * 2) * 0.4 : 0.2]}
-          >
-            <capsuleGeometry args={[0.07, 0.15, 8, 16]} />
+          <mesh position={[-0.42, 0.55, 0]}>
+            <circleGeometry args={[0.1, 32]} />
             <meshBasicMaterial color={skinColor} />
           </mesh>
-          <mesh
-            position={[0.4, 0.6, 0]}
-            rotation={[0, 0, isMoving ? -Math.sin(bounceRef.current * 2) * 0.4 : -0.2]}
-          >
-            <capsuleGeometry args={[0.07, 0.15, 8, 16]} />
+          <mesh position={[0.42, 0.55, 0]}>
+            <circleGeometry args={[0.1, 32]} />
             <meshBasicMaterial color={skinColor} />
           </mesh>
 
