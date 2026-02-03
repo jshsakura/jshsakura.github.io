@@ -1,36 +1,25 @@
 import { forwardRef, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Billboard, Text } from '@react-three/drei'
+import { Text } from '@react-three/drei'
 import { RigidBody, CapsuleCollider } from '@react-three/rapier'
 import * as THREE from 'three'
 
 const Player = forwardRef(function Player({ targetPosition }, ref) {
   const rigidBody = useRef()
-  const [direction, setDirection] = useState(1)
+  const characterRef = useRef()
   const [isMoving, setIsMoving] = useState(false)
   const bounceRef = useRef(0)
-  const blinkRef = useRef(0)
-  const [isBlinking, setIsBlinking] = useState(false)
+  const rotationRef = useRef(0)
 
   // Catppuccin Latte colors
-  const skinColor = '#eff1f5'
+  const skinColor = '#dce0e8'
   const hairColor = '#4c4f69'
-  const shirtColor = '#7287fd' // lavender
-  const pantsColor = '#5c5f77' // subtext1
-  const cheekColor = '#ea76cb' // pink
-  const eyeColor = '#4c4f69' // text
+  const shirtColor = '#7287fd'
+  const pantsColor = '#5c5f77'
+  const shoeColor = '#4c4f69'
 
   useFrame((state, delta) => {
     if (!rigidBody.current) return
-
-    blinkRef.current += delta
-    if (blinkRef.current > 3) {
-      setIsBlinking(true)
-      if (blinkRef.current > 3.15) {
-        setIsBlinking(false)
-        blinkRef.current = 0
-      }
-    }
 
     if (!targetPosition) return
 
@@ -51,20 +40,25 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
         z: dir.z * speed,
       })
 
-      if (dir.x > 0.1) setDirection(1)
-      else if (dir.x < -0.1) setDirection(-1)
+      // Rotate character to face movement direction
+      rotationRef.current = Math.atan2(dir.x, dir.z)
 
       setIsMoving(true)
-      bounceRef.current += delta * 12
+      bounceRef.current += delta * 10
     } else {
       rigidBody.current.setLinvel({ x: 0, y: velocity.y, z: 0 })
       setIsMoving(false)
     }
+
+    // Apply rotation to character
+    if (characterRef.current) {
+      characterRef.current.rotation.y = rotationRef.current
+    }
   })
 
-  const bounceOffset = isMoving ? Math.abs(Math.sin(bounceRef.current)) * 0.12 : 0
-  const squishY = isMoving ? 1 - Math.abs(Math.sin(bounceRef.current)) * 0.08 : 1
-  const squishX = isMoving ? 1 + Math.abs(Math.sin(bounceRef.current)) * 0.05 : 1
+  const bounceOffset = isMoving ? Math.abs(Math.sin(bounceRef.current)) * 0.1 : 0
+  const legSwing = isMoving ? Math.sin(bounceRef.current * 2) * 0.4 : 0
+  const armSwing = isMoving ? Math.sin(bounceRef.current * 2) * 0.3 : 0
 
   return (
     <RigidBody
@@ -81,188 +75,116 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
     >
       <CapsuleCollider args={[0.3, 0.3]} position={[0, 0.6, 0]} />
 
-      <group scale={[direction * squishX, squishY, 1]} position={[0, bounceOffset, 0]}>
-        <Billboard follow={true} lockX={false} lockY={false} lockZ={false}>
-          {/* Shadow */}
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} scale={[1, 0.6, 1]}>
-            <circleGeometry args={[0.35, 32]} />
-            <meshBasicMaterial color="#4c4f69" transparent opacity={0.15} />
-          </mesh>
+      <group ref={characterRef} position={[0, bounceOffset, 0]}>
+        {/* Shadow */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
+          <circleGeometry args={[0.4, 32]} />
+          <meshBasicMaterial color="#4c4f69" transparent opacity={0.2} />
+        </mesh>
 
-          {/* Body */}
-          <mesh position={[0, 0.55, 0]}>
-            <circleGeometry args={[0.35, 32]} />
-            <meshBasicMaterial color={shirtColor} />
-          </mesh>
+        {/* Body */}
+        <mesh position={[0, 0.65, 0]} castShadow>
+          <capsuleGeometry args={[0.25, 0.3, 8, 16]} />
+          <meshStandardMaterial color={shirtColor} />
+        </mesh>
 
-          {/* Body highlight */}
-          <mesh position={[-0.1, 0.65, 0.01]}>
-            <circleGeometry args={[0.08, 32]} />
-            <meshBasicMaterial color="#8839ef" transparent opacity={0.3} />
-          </mesh>
+        {/* Head */}
+        <mesh position={[0, 1.2, 0]} castShadow>
+          <sphereGeometry args={[0.3, 16, 16]} />
+          <meshStandardMaterial color={skinColor} />
+        </mesh>
 
-          {/* Legs */}
-          <mesh position={[-0.12, 0.2, 0]}>
-            <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color={pantsColor} />
-          </mesh>
-          <mesh position={[0.12, 0.2, 0]}>
-            <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color={pantsColor} />
-          </mesh>
+        {/* Hair */}
+        <mesh position={[0, 1.35, 0]} castShadow>
+          <sphereGeometry args={[0.32, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={hairColor} />
+        </mesh>
+        {/* Hair front */}
+        <mesh position={[0, 1.25, 0.2]} castShadow>
+          <boxGeometry args={[0.5, 0.15, 0.1]} />
+          <meshStandardMaterial color={hairColor} />
+        </mesh>
 
-          {/* Shoes */}
-          <mesh position={[-0.12, 0.05, 0.02]}>
-            <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color="#4c4f69" />
-          </mesh>
-          <mesh position={[0.12, 0.05, 0.02]}>
-            <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color="#4c4f69" />
-          </mesh>
+        {/* Eyes */}
+        <mesh position={[-0.1, 1.22, 0.25]}>
+          <sphereGeometry args={[0.05, 8, 8]} />
+          <meshBasicMaterial color="#4c4f69" />
+        </mesh>
+        <mesh position={[0.1, 1.22, 0.25]}>
+          <sphereGeometry args={[0.05, 8, 8]} />
+          <meshBasicMaterial color="#4c4f69" />
+        </mesh>
 
-          {/* Head */}
-          <mesh position={[0, 1.1, 0]}>
-            <circleGeometry args={[0.45, 32]} />
-            <meshBasicMaterial color={skinColor} />
-          </mesh>
+        {/* Cheeks */}
+        <mesh position={[-0.2, 1.15, 0.22]}>
+          <sphereGeometry args={[0.06, 8, 8]} />
+          <meshBasicMaterial color="#ea76cb" transparent opacity={0.5} />
+        </mesh>
+        <mesh position={[0.2, 1.15, 0.22]}>
+          <sphereGeometry args={[0.06, 8, 8]} />
+          <meshBasicMaterial color="#ea76cb" transparent opacity={0.5} />
+        </mesh>
 
-          {/* Hair - full coverage */}
-          <mesh position={[0, 1.2, -0.02]}>
-            <circleGeometry args={[0.48, 32]} />
-            <meshBasicMaterial color={hairColor} />
-          </mesh>
+        {/* Mouth */}
+        <mesh position={[0, 1.1, 0.28]}>
+          <sphereGeometry args={[0.03, 8, 8]} />
+          <meshBasicMaterial color="#d20f39" />
+        </mesh>
 
-          {/* Hair top */}
-          <mesh position={[0, 1.45, 0]}>
-            <circleGeometry args={[0.35, 32]} />
-            <meshBasicMaterial color={hairColor} />
+        {/* Left Arm */}
+        <group position={[-0.35, 0.7, 0]} rotation={[armSwing, 0, 0]}>
+          <mesh castShadow>
+            <capsuleGeometry args={[0.08, 0.25, 8, 8]} />
+            <meshStandardMaterial color={skinColor} />
           </mesh>
+        </group>
 
-          {/* Hair bangs - fluffy */}
-          <mesh position={[-0.15, 1.35, 0.01]}>
-            <circleGeometry args={[0.18, 32]} />
-            <meshBasicMaterial color={hairColor} />
+        {/* Right Arm */}
+        <group position={[0.35, 0.7, 0]} rotation={[-armSwing, 0, 0]}>
+          <mesh castShadow>
+            <capsuleGeometry args={[0.08, 0.25, 8, 8]} />
+            <meshStandardMaterial color={skinColor} />
           </mesh>
-          <mesh position={[0.15, 1.35, 0.01]}>
-            <circleGeometry args={[0.18, 32]} />
-            <meshBasicMaterial color={hairColor} />
-          </mesh>
-          <mesh position={[0, 1.38, 0.01]}>
-            <circleGeometry args={[0.15, 32]} />
-            <meshBasicMaterial color={hairColor} />
-          </mesh>
+        </group>
 
-          {/* Hair side left */}
-          <mesh position={[-0.38, 1.1, 0.01]} scale={[0.6, 1.2, 1]}>
-            <circleGeometry args={[0.22, 32]} />
-            <meshBasicMaterial color={hairColor} />
+        {/* Left Leg */}
+        <group position={[-0.12, 0.25, 0]} rotation={[-legSwing, 0, 0]}>
+          <mesh position={[0, 0, 0]} castShadow>
+            <capsuleGeometry args={[0.08, 0.2, 8, 8]} />
+            <meshStandardMaterial color={pantsColor} />
           </mesh>
+          {/* Shoe */}
+          <mesh position={[0, -0.18, 0.05]} castShadow>
+            <boxGeometry args={[0.12, 0.08, 0.18]} />
+            <meshStandardMaterial color={shoeColor} />
+          </mesh>
+        </group>
 
-          {/* Hair side right */}
-          <mesh position={[0.38, 1.1, 0.01]} scale={[0.6, 1.2, 1]}>
-            <circleGeometry args={[0.22, 32]} />
-            <meshBasicMaterial color={hairColor} />
+        {/* Right Leg */}
+        <group position={[0.12, 0.25, 0]} rotation={[legSwing, 0, 0]}>
+          <mesh position={[0, 0, 0]} castShadow>
+            <capsuleGeometry args={[0.08, 0.2, 8, 8]} />
+            <meshStandardMaterial color={pantsColor} />
           </mesh>
+          {/* Shoe */}
+          <mesh position={[0, -0.18, 0.05]} castShadow>
+            <boxGeometry args={[0.12, 0.08, 0.18]} />
+            <meshStandardMaterial color={shoeColor} />
+          </mesh>
+        </group>
 
-          {/* Face area */}
-          <mesh position={[0, 1.0, 0.01]}>
-            <circleGeometry args={[0.38, 32]} />
-            <meshBasicMaterial color={skinColor} />
-          </mesh>
-
-          {/* Eyes */}
-          {!isBlinking ? (
-            <>
-              <mesh position={[-0.15, 1.05, 0.02]}>
-                <circleGeometry args={[0.12, 32]} />
-                <meshBasicMaterial color="#eff1f5" />
-              </mesh>
-              <mesh position={[-0.15, 1.03, 0.03]}>
-                <circleGeometry args={[0.08, 32]} />
-                <meshBasicMaterial color={eyeColor} />
-              </mesh>
-              <mesh position={[-0.12, 1.07, 0.04]}>
-                <circleGeometry args={[0.03, 16]} />
-                <meshBasicMaterial color="#eff1f5" />
-              </mesh>
-              <mesh position={[-0.18, 1.02, 0.04]}>
-                <circleGeometry args={[0.015, 16]} />
-                <meshBasicMaterial color="#eff1f5" />
-              </mesh>
-
-              <mesh position={[0.15, 1.05, 0.02]}>
-                <circleGeometry args={[0.12, 32]} />
-                <meshBasicMaterial color="#eff1f5" />
-              </mesh>
-              <mesh position={[0.15, 1.03, 0.03]}>
-                <circleGeometry args={[0.08, 32]} />
-                <meshBasicMaterial color={eyeColor} />
-              </mesh>
-              <mesh position={[0.18, 1.07, 0.04]}>
-                <circleGeometry args={[0.03, 16]} />
-                <meshBasicMaterial color="#eff1f5" />
-              </mesh>
-              <mesh position={[0.12, 1.02, 0.04]}>
-                <circleGeometry args={[0.015, 16]} />
-                <meshBasicMaterial color="#eff1f5" />
-              </mesh>
-            </>
-          ) : (
-            <>
-              <mesh position={[-0.15, 1.05, 0.02]}>
-                <planeGeometry args={[0.15, 0.03]} />
-                <meshBasicMaterial color={eyeColor} />
-              </mesh>
-              <mesh position={[0.15, 1.05, 0.02]}>
-                <planeGeometry args={[0.15, 0.03]} />
-                <meshBasicMaterial color={eyeColor} />
-              </mesh>
-            </>
-          )}
-
-          {/* Cheeks */}
-          <mesh position={[-0.28, 0.95, 0.02]}>
-            <circleGeometry args={[0.08, 32]} />
-            <meshBasicMaterial color={cheekColor} transparent opacity={0.4} />
-          </mesh>
-          <mesh position={[0.28, 0.95, 0.02]}>
-            <circleGeometry args={[0.08, 32]} />
-            <meshBasicMaterial color={cheekColor} transparent opacity={0.4} />
-          </mesh>
-
-          {/* Mouth */}
-          <mesh position={[0, 0.88, 0.02]}>
-            <circleGeometry args={[0.04, 32, 0, Math.PI]} />
-            <meshBasicMaterial color="#d20f39" />
-          </mesh>
-
-          {/* Arms */}
-          <mesh position={[-0.42, 0.55, 0]}>
-            <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color={skinColor} />
-          </mesh>
-          <mesh position={[0.42, 0.55, 0]}>
-            <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color={skinColor} />
-          </mesh>
-
-          {/* Name tag */}
-          <mesh position={[0, 1.75, -0.01]}>
-            <planeGeometry args={[1.2, 0.35]} />
-            <meshBasicMaterial color="#eff1f5" transparent opacity={0.95} />
-          </mesh>
-          <Text
-            position={[0, 1.75, 0]}
-            fontSize={0.2}
-            color="#8839ef"
-            anchorX="center"
-            anchorY="middle"
-            fontWeight="bold"
-          >
-            Seunghyeon
-          </Text>
-        </Billboard>
+        {/* Name tag */}
+        <Text
+          position={[0, 1.8, 0]}
+          fontSize={0.2}
+          color="#8839ef"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.02}
+          outlineColor="#eff1f5"
+        >
+          Seunghyeon
+        </Text>
       </group>
     </RigidBody>
   )
