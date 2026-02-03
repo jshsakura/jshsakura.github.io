@@ -1,74 +1,71 @@
 export const resumeData = {
   personal: {
-    name: 'jshsakura',
-    title: '프리랜서 개발자',
-    tagline: '"훌륭한 목수는 보이지 않는 곳이라고 해서 썩은 나무를 덧대지 않는다."',
+    name: 'Seunghyeon',
+    title: 'Freelance Developer',
+    tagline: '"A good craftsman never uses rotten wood, even in places that cannot be seen."',
     github: 'https://github.com/jshsakura',
+    email: 'contact@example.com',
     location: 'Seoul, Korea',
-  },
-
-  about: {
-    title: '긍정적인 사고로 협업을 주도하는 개발자입니다.',
-    description: [
-      'Python과 Java를 중심으로 개발을 하는 웹 개발자입니다. 협업과 원활한 커뮤니케이션을 강조하며, 항상 팀원들과의 긍정적인 관계를 가장 중요하게 생각합니다. 다양한 프로젝트에서의 경험을 통해 얻은 능력을 토대로, 팀원들과 함께 목표를 달성하는 데 기여하고 있습니다.',
-      '제 개발 스타일은 해결책 중심이며, 문제를 빠르게 파악하고 효과적으로 대응하는 것을 중요하게 생각합니다. AI를 통해 해결책을 찾는 것을 꺼리지 않지만, 동시에 동료들과의 협업을 통해 더 나은 결과물을 만들기 위해 힘쓰고 있습니다.',
-      '제 소통 스타일은 열린 마음과 존중을 기반으로 하며, 어려운 상황에서도 차분하게 해결 방안을 모색하는 재주가 있습니다. 부정적인 태도보다 긍정적으로 문제를 접근하며, 팀의 분위기를 즐겁게 유지하고자 노력합니다.',
-    ],
   },
 
   skills: {
     frontend: {
       name: 'Frontend',
-      items: ['React', 'Next.js', '넥사크로', '웹스퀘어'],
+      items: ['React', 'Next.js', 'Nexacro', 'WebSquare'],
       color: '#61dafb',
+      icon: '🎨',
     },
     backend: {
       name: 'Backend',
       items: ['Java Spring', 'SpringBoot', 'ASP.NET', 'Node.js', 'Python'],
       color: '#68a063',
+      icon: '⚙️',
     },
     mobile: {
       name: 'Mobile',
       items: ['Android (Java)', 'iOS (Swift)'],
       color: '#a4c639',
+      icon: '📱',
     },
     database: {
       name: 'Database',
-      items: ['Oracle'],
+      items: ['Oracle', 'MySQL', 'PostgreSQL'],
       color: '#f80000',
+      icon: '🗄️',
     },
     etc: {
-      name: '기타',
-      items: ['API Gateway', 'SSO', 'REST API'],
+      name: 'Others',
+      items: ['API Gateway', 'SSO', 'REST API', 'Git'],
       color: '#8b5cf6',
+      icon: '🔧',
     },
   },
 
   experience: [
     {
-      company: '프리랜서',
-      period: '2020.07 ~ 현재',
-      duration: '5년+',
-      role: '프리랜서 개발자',
+      company: 'Freelancer',
+      period: '2020.07 ~ Present',
+      duration: '5+ years',
+      role: 'Freelance Developer',
       projects: [
         {
-          name: '서린상사 트레이딩 시스템',
-          description: 'WMS, LME Python API 개발',
+          name: 'Seorin Trading System',
+          description: 'WMS, LME Python API Development',
           tech: ['Python', 'API'],
         },
         {
-          name: 'NC 소프트 CMS, HR 시스템',
-          description: '넥사크로 → React 리뉴얼',
+          name: 'NC Soft CMS, HR System',
+          description: 'Nexacro → React Renewal',
           tech: ['React', 'Java'],
         },
         {
-          name: '스마일 게이트 재무포탈',
-          description: '유지보수',
+          name: 'Smilegate Finance Portal',
+          description: 'Maintenance & Support',
           tech: ['Java', 'Spring'],
         },
         {
-          name: '스마일 게이트 총무 시스템',
-          description: '신규 개발',
+          name: 'Smilegate General Affairs',
+          description: 'New Development',
           tech: ['Java', 'Spring'],
         },
       ],
@@ -76,57 +73,77 @@ export const resumeData = {
     {
       company: 'C-node',
       period: '2014.10 ~ 2020.04',
-      duration: '5년 7개월',
-      role: '개발자',
+      duration: '5y 7m',
+      role: 'Developer',
       projects: [
         {
-          name: '쌍용자동차 SPMS/SCMS',
-          description: '고객관리 시스템 (ASP → Java 전환)',
+          name: 'Ssangyong Motor SPMS/SCMS',
+          description: 'Customer Management (ASP → Java)',
           tech: ['Java', 'Spring'],
         },
         {
-          name: '종로의료기 오뷰 앱',
-          description: 'Android/iOS 앱 개발',
+          name: 'Jongro Medical O-View App',
+          description: 'Android/iOS App Development',
           tech: ['Android', 'iOS', 'Swift'],
         },
         {
-          name: '누리미디어 DBPIA ONE',
-          description: '논문 투고 시스템 고도화',
+          name: 'Nurimedia DBPIA ONE',
+          description: 'Paper Submission System',
           tech: ['Java'],
         },
         {
-          name: '대한건설협회 시공자 정보 서비스',
-          description: 'SpringBoot 기반 개발',
+          name: 'Korea Construction Association',
+          description: 'SpringBoot Development',
           tech: ['SpringBoot'],
         },
         {
-          name: '현대엔지니어링 HSE 안전관리 포털',
-          description: '.NET 기반 개발',
+          name: 'Hyundai E&C HSE Portal',
+          description: '.NET Development',
           tech: ['.NET'],
         },
         {
-          name: 'LS 트랙터 딜러 포털 SSO',
-          description: 'SSO 시스템 개발',
+          name: 'LS Tractor Dealer Portal SSO',
+          description: 'SSO System Development',
           tech: ['Java', 'SSO'],
-        },
-        {
-          name: '나이스디앤비 무역정보 포털',
-          description: '무역정보 서비스 개발',
-          tech: ['Java'],
-        },
-        {
-          name: 'LS 전선 진단 포털 시스템',
-          description: '포털 시스템 개발',
-          tech: ['Java'],
-        },
-        {
-          name: '삼천리 홈페이지 운영',
-          description: '웹사이트 운영 및 유지보수',
-          tech: ['Java'],
         },
       ],
     },
   ],
 
-  totalExperience: '11년+',
+  totalExperience: '11+ years',
 };
+
+export const roomsConfig = [
+  {
+    id: 'welcome',
+    name: 'Welcome',
+    position: [0, 0],
+    color: '#a8e6cf',
+    size: 6,
+    description: 'Start here!',
+  },
+  {
+    id: 'skills',
+    name: 'Skills',
+    position: [10, 0],
+    color: '#dcedc1',
+    size: 8,
+    description: 'My tech stack',
+  },
+  {
+    id: 'experience',
+    name: 'Experience',
+    position: [0, -12],
+    color: '#ffd3b6',
+    size: 8,
+    description: 'Work history',
+  },
+  {
+    id: 'contact',
+    name: 'Contact',
+    position: [10, -12],
+    color: '#ffaaa5',
+    size: 6,
+    description: 'Get in touch',
+  },
+];
