@@ -150,7 +150,6 @@ const Player = forwardRef(function Player(props, ref) {
             color="#374151"
             anchorX="center"
             anchorY="middle"
-            font="/fonts/NotoSansKR-Bold.ttf"
           >
             Seunghyeon
           </Text>
