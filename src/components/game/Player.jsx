@@ -85,8 +85,8 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
       <group scale={[direction * squishX, squishY, 1]} position={[0, bounceOffset, 0]}>
         <Billboard follow={true} lockX={false} lockY={false} lockZ={false}>
           {/* Shadow */}
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
-            <ellipseGeometry args={[0.35, 0.2, 32]} />
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} scale={[1, 0.6, 1]}>
+            <circleGeometry args={[0.35, 32]} />
             <meshBasicMaterial color="#000" transparent opacity={0.15} />
           </mesh>
 
@@ -141,14 +141,14 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
           </mesh>
 
           {/* Hair side left */}
-          <mesh position={[-0.35, 1.15, 0.01]}>
-            <ellipseGeometry args={[0.12, 0.25, 32]} />
+          <mesh position={[-0.35, 1.15, 0.01]} scale={[0.5, 1, 1]}>
+            <circleGeometry args={[0.25, 32]} />
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
           {/* Hair side right */}
-          <mesh position={[0.35, 1.15, 0.01]}>
-            <ellipseGeometry args={[0.12, 0.25, 32]} />
+          <mesh position={[0.35, 1.15, 0.01]} scale={[0.5, 1, 1]}>
+            <circleGeometry args={[0.25, 32]} />
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
