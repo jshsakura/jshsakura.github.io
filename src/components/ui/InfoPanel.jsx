@@ -4,24 +4,24 @@ import { resumeData } from '../../data/resume'
 function WelcomeContent() {
   return (
     <div className="text-center">
-      <h2 className="text-2xl font-bold text-gray-800 mb-2">
+      <h2 className="text-2xl font-bold text-[#4c4f69] mb-2">
         Welcome!
       </h2>
-      <p className="text-gray-600 mb-4">
-        Hi, I&apos;m <span className="font-semibold text-indigo-600">{resumeData.personal.name}</span>
+      <p className="text-[#5c5f77] mb-4">
+        Hi, I&apos;m <span className="font-semibold text-[#8839ef]">{resumeData.personal.name}</span>
       </p>
-      <p className="text-sm text-gray-500 italic mb-4">
+      <p className="text-sm text-[#6c6f85] italic mb-4">
         {resumeData.personal.tagline}
       </p>
-      <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+      <div className="flex items-center justify-center gap-2 text-sm text-[#6c6f85]">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
         {resumeData.personal.location}
       </div>
-      <p className="text-xs text-gray-400 mt-4">
-        Use WASD or Arrow keys to explore!
+      <p className="text-xs text-[#7c7f93] mt-4">
+        Click anywhere to explore!
       </p>
     </div>
   )
@@ -30,14 +30,14 @@ function WelcomeContent() {
 function SkillsContent() {
   return (
     <div>
-      <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
+      <h2 className="text-xl font-bold text-[#4c4f69] mb-4 text-center">
         Tech Stack
       </h2>
       <div className="grid grid-cols-2 gap-3">
         {Object.values(resumeData.skills).map((category) => (
           <div
             key={category.name}
-            className="bg-white/50 rounded-xl p-3"
+            className="bg-[#e6e9ef] rounded-xl p-3"
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg">{category.icon}</span>
@@ -52,7 +52,7 @@ function SkillsContent() {
               {category.items.map((item) => (
                 <span
                   key={item}
-                  className="text-xs bg-white/70 text-gray-600 px-2 py-1 rounded-full"
+                  className="text-xs bg-[#eff1f5] text-[#5c5f77] px-2 py-1 rounded-full"
                 >
                   {item}
                 </span>
@@ -68,34 +68,34 @@ function SkillsContent() {
 function ExperienceContent() {
   return (
     <div>
-      <h2 className="text-xl font-bold text-gray-800 mb-2 text-center">
+      <h2 className="text-xl font-bold text-[#4c4f69] mb-2 text-center">
         Experience
       </h2>
-      <p className="text-center text-sm text-indigo-600 font-semibold mb-4">
+      <p className="text-center text-sm text-[#8839ef] font-semibold mb-4">
         {resumeData.totalExperience} Total
       </p>
       <div className="space-y-4 max-h-64 overflow-y-auto pr-2">
         {resumeData.experience.map((exp) => (
-          <div key={exp.company} className="bg-white/50 rounded-xl p-3">
+          <div key={exp.company} className="bg-[#e6e9ef] rounded-xl p-3">
             <div className="flex justify-between items-start mb-2">
               <div>
-                <h3 className="font-bold text-gray-800">{exp.company}</h3>
-                <p className="text-xs text-gray-500">{exp.role}</p>
+                <h3 className="font-bold text-[#4c4f69]">{exp.company}</h3>
+                <p className="text-xs text-[#6c6f85]">{exp.role}</p>
               </div>
-              <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full">
+              <span className="text-xs bg-[#8839ef]/20 text-[#8839ef] px-2 py-1 rounded-full">
                 {exp.duration}
               </span>
             </div>
-            <p className="text-xs text-gray-400 mb-2">{exp.period}</p>
+            <p className="text-xs text-[#7c7f93] mb-2">{exp.period}</p>
             <div className="space-y-1">
               {exp.projects.slice(0, 3).map((project) => (
                 <div key={project.name} className="text-xs">
-                  <span className="text-gray-700">{project.name}</span>
-                  <span className="text-gray-400 ml-1">- {project.description}</span>
+                  <span className="text-[#4c4f69]">{project.name}</span>
+                  <span className="text-[#7c7f93] ml-1">- {project.description}</span>
                 </div>
               ))}
               {exp.projects.length > 3 && (
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-[#7c7f93]">
                   +{exp.projects.length - 3} more projects
                 </p>
               )}
@@ -110,7 +110,7 @@ function ExperienceContent() {
 function ContactContent() {
   return (
     <div className="text-center">
-      <h2 className="text-xl font-bold text-gray-800 mb-4">
+      <h2 className="text-xl font-bold text-[#4c4f69] mb-4">
         Get in Touch
       </h2>
       <div className="space-y-3">
@@ -118,7 +118,7 @@ function ContactContent() {
           href={resumeData.personal.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl px-4 py-3 transition-colors pointer-events-auto"
+          className="flex items-center justify-center gap-3 bg-[#4c4f69] hover:bg-[#5c5f77] text-[#eff1f5] rounded-xl px-4 py-3 transition-colors pointer-events-auto"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -131,7 +131,7 @@ function ContactContent() {
         </a>
         <a
           href={`mailto:${resumeData.personal.email}`}
-          className="flex items-center justify-center gap-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-3 transition-colors pointer-events-auto"
+          className="flex items-center justify-center gap-3 bg-[#8839ef] hover:bg-[#7c3aed] text-[#eff1f5] rounded-xl px-4 py-3 transition-colors pointer-events-auto"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -139,7 +139,7 @@ function ContactContent() {
           <span>Email</span>
         </a>
       </div>
-      <p className="text-sm text-gray-500 mt-4">
+      <p className="text-sm text-[#6c6f85] mt-4">
         Feel free to reach out!
       </p>
     </div>
@@ -166,7 +166,7 @@ export default function InfoPanel({ currentRoom }) {
       transition={{ type: 'spring', damping: 20, stiffness: 300 }}
       className="absolute right-4 top-1/2 transform -translate-y-1/2 w-80 pointer-events-auto"
     >
-      <div className="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-xl">
+      <div className="bg-[#eff1f5]/95 backdrop-blur-md rounded-3xl p-5 shadow-xl border border-[#ccd0da]">
         <ContentComponent />
       </div>
     </motion.div>

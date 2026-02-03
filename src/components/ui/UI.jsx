@@ -15,11 +15,11 @@ export default function UI({ currentRoom, isLoaded }) {
         transition={{ delay: 0.3, duration: 0.5 }}
         className="absolute top-4 left-4 pointer-events-auto"
       >
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-lg">
-          <h1 className="text-xl font-bold text-gray-800">
+        <div className="bg-[#eff1f5]/95 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-lg border border-[#ccd0da]">
+          <h1 className="text-xl font-bold text-[#4c4f69]">
             {resumeData.personal.name}
           </h1>
-          <p className="text-sm text-gray-500">{resumeData.personal.title}</p>
+          <p className="text-sm text-[#6c6f85]">{resumeData.personal.title}</p>
         </div>
       </motion.div>
 
@@ -34,7 +34,7 @@ export default function UI({ currentRoom, isLoaded }) {
           href={resumeData.personal.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full px-4 py-2 shadow-lg transition-colors"
+          className="flex items-center gap-2 bg-[#4c4f69] hover:bg-[#5c5f77] text-[#eff1f5] rounded-full px-4 py-2 shadow-lg transition-colors"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -62,9 +62,9 @@ export default function UI({ currentRoom, isLoaded }) {
         transition={{ delay: 0.5, duration: 0.5 }}
         className="absolute bottom-20 left-1/2 transform -translate-x-1/2"
       >
-        <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-md">
-          <span className="text-sm text-gray-600">
-            Current: <span className="font-semibold text-indigo-600 capitalize">{currentRoom}</span>
+        <div className="bg-[#eff1f5]/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-md border border-[#ccd0da]">
+          <span className="text-sm text-[#5c5f77]">
+            Current: <span className="font-semibold text-[#8839ef] capitalize">{currentRoom}</span>
           </span>
         </div>
       </motion.div>

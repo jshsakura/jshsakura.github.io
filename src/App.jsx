@@ -27,7 +27,7 @@ function App() {
           far: 1000,
         }}
         onCreated={handleLoaded}
-        style={{ background: 'linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%)' }}
+        style={{ background: 'linear-gradient(180deg, #eff1f5 0%, #e6e9ef 50%, #dce0e8 100%)' }}
       >
         <Suspense fallback={null}>
           <Game

@@ -12,18 +12,17 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
   const blinkRef = useRef(0)
   const [isBlinking, setIsBlinking] = useState(false)
 
-  // Cute pastel colors
-  const skinColor = '#ffe4d4'
-  const hairColor = '#5c4033'
-  const shirtColor = '#7c9eb8'
-  const pantsColor = '#6b7b8a'
-  const cheekColor = '#ffb6c1'
-  const eyeColor = '#2d2d2d'
+  // Catppuccin Latte colors
+  const skinColor = '#eff1f5'
+  const hairColor = '#4c4f69'
+  const shirtColor = '#7287fd' // lavender
+  const pantsColor = '#5c5f77' // subtext1
+  const cheekColor = '#ea76cb' // pink
+  const eyeColor = '#4c4f69' // text
 
   useFrame((state, delta) => {
     if (!rigidBody.current) return
 
-    // Blinking animation
     blinkRef.current += delta
     if (blinkRef.current > 3) {
       setIsBlinking(true)
@@ -87,10 +86,10 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
           {/* Shadow */}
           <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} scale={[1, 0.6, 1]}>
             <circleGeometry args={[0.35, 32]} />
-            <meshBasicMaterial color="#000" transparent opacity={0.15} />
+            <meshBasicMaterial color="#4c4f69" transparent opacity={0.15} />
           </mesh>
 
-          {/* Body - round and cute */}
+          {/* Body */}
           <mesh position={[0, 0.55, 0]}>
             <circleGeometry args={[0.35, 32]} />
             <meshBasicMaterial color={shirtColor} />
@@ -99,10 +98,10 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
           {/* Body highlight */}
           <mesh position={[-0.1, 0.65, 0.01]}>
             <circleGeometry args={[0.08, 32]} />
-            <meshBasicMaterial color="#9bb5c9" transparent opacity={0.6} />
+            <meshBasicMaterial color="#8839ef" transparent opacity={0.3} />
           </mesh>
 
-          {/* Legs - small and stubby */}
+          {/* Legs */}
           <mesh position={[-0.12, 0.18, 0]}>
             <capsuleGeometry args={[0.08, 0.15, 8, 16]} />
             <meshBasicMaterial color={pantsColor} />
@@ -115,14 +114,14 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
           {/* Shoes */}
           <mesh position={[-0.12, 0.05, 0.02]}>
             <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color="#4a4a4a" />
+            <meshBasicMaterial color="#4c4f69" />
           </mesh>
           <mesh position={[0.12, 0.05, 0.02]}>
             <circleGeometry args={[0.1, 32]} />
-            <meshBasicMaterial color="#4a4a4a" />
+            <meshBasicMaterial color="#4c4f69" />
           </mesh>
 
-          {/* Head - big and round (SD style) */}
+          {/* Head */}
           <mesh position={[0, 1.1, 0]}>
             <circleGeometry args={[0.45, 32]} />
             <meshBasicMaterial color={skinColor} />
@@ -152,58 +151,51 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
             <meshBasicMaterial color={hairColor} />
           </mesh>
 
-          {/* Face area (lighter) */}
+          {/* Face area */}
           <mesh position={[0, 1.0, 0.01]}>
             <circleGeometry args={[0.38, 32]} />
             <meshBasicMaterial color={skinColor} />
           </mesh>
 
-          {/* Eyes - big and sparkly */}
+          {/* Eyes */}
           {!isBlinking ? (
             <>
-              {/* Left eye white */}
               <mesh position={[-0.15, 1.05, 0.02]}>
                 <circleGeometry args={[0.12, 32]} />
-                <meshBasicMaterial color="#fff" />
+                <meshBasicMaterial color="#eff1f5" />
               </mesh>
-              {/* Left eye pupil */}
               <mesh position={[-0.15, 1.03, 0.03]}>
                 <circleGeometry args={[0.08, 32]} />
                 <meshBasicMaterial color={eyeColor} />
               </mesh>
-              {/* Left eye sparkle */}
               <mesh position={[-0.12, 1.07, 0.04]}>
                 <circleGeometry args={[0.03, 16]} />
-                <meshBasicMaterial color="#fff" />
+                <meshBasicMaterial color="#eff1f5" />
               </mesh>
               <mesh position={[-0.18, 1.02, 0.04]}>
                 <circleGeometry args={[0.015, 16]} />
-                <meshBasicMaterial color="#fff" />
+                <meshBasicMaterial color="#eff1f5" />
               </mesh>
 
-              {/* Right eye white */}
               <mesh position={[0.15, 1.05, 0.02]}>
                 <circleGeometry args={[0.12, 32]} />
-                <meshBasicMaterial color="#fff" />
+                <meshBasicMaterial color="#eff1f5" />
               </mesh>
-              {/* Right eye pupil */}
               <mesh position={[0.15, 1.03, 0.03]}>
                 <circleGeometry args={[0.08, 32]} />
                 <meshBasicMaterial color={eyeColor} />
               </mesh>
-              {/* Right eye sparkle */}
               <mesh position={[0.18, 1.07, 0.04]}>
                 <circleGeometry args={[0.03, 16]} />
-                <meshBasicMaterial color="#fff" />
+                <meshBasicMaterial color="#eff1f5" />
               </mesh>
               <mesh position={[0.12, 1.02, 0.04]}>
                 <circleGeometry args={[0.015, 16]} />
-                <meshBasicMaterial color="#fff" />
+                <meshBasicMaterial color="#eff1f5" />
               </mesh>
             </>
           ) : (
             <>
-              {/* Closed eyes - happy lines */}
               <mesh position={[-0.15, 1.05, 0.02]}>
                 <planeGeometry args={[0.15, 0.03]} />
                 <meshBasicMaterial color={eyeColor} />
@@ -215,23 +207,23 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
             </>
           )}
 
-          {/* Cheeks - blush */}
+          {/* Cheeks */}
           <mesh position={[-0.28, 0.95, 0.02]}>
             <circleGeometry args={[0.08, 32]} />
-            <meshBasicMaterial color={cheekColor} transparent opacity={0.5} />
+            <meshBasicMaterial color={cheekColor} transparent opacity={0.4} />
           </mesh>
           <mesh position={[0.28, 0.95, 0.02]}>
             <circleGeometry args={[0.08, 32]} />
-            <meshBasicMaterial color={cheekColor} transparent opacity={0.5} />
+            <meshBasicMaterial color={cheekColor} transparent opacity={0.4} />
           </mesh>
 
-          {/* Mouth - small and cute */}
+          {/* Mouth */}
           <mesh position={[0, 0.88, 0.02]}>
             <circleGeometry args={[0.04, 32, 0, Math.PI]} />
-            <meshBasicMaterial color="#e57373" />
+            <meshBasicMaterial color="#d20f39" />
           </mesh>
 
-          {/* Arms - small and round */}
+          {/* Arms */}
           <mesh
             position={[-0.4, 0.6, 0]}
             rotation={[0, 0, isMoving ? Math.sin(bounceRef.current * 2) * 0.4 : 0.2]}
@@ -247,15 +239,15 @@ const Player = forwardRef(function Player({ targetPosition }, ref) {
             <meshBasicMaterial color={skinColor} />
           </mesh>
 
-          {/* Name tag with bubble */}
+          {/* Name tag */}
           <mesh position={[0, 1.75, -0.01]}>
             <planeGeometry args={[1.2, 0.35]} />
-            <meshBasicMaterial color="#fff" transparent opacity={0.9} />
+            <meshBasicMaterial color="#eff1f5" transparent opacity={0.95} />
           </mesh>
           <Text
             position={[0, 1.75, 0]}
             fontSize={0.2}
-            color="#5c6bc0"
+            color="#8839ef"
             anchorX="center"
             anchorY="middle"
             fontWeight="bold"

@@ -12,31 +12,31 @@ export const resumeData = {
     frontend: {
       name: 'Frontend',
       items: ['React', 'Next.js', 'Nexacro', 'WebSquare'],
-      color: '#61dafb',
+      color: '#1e66f5',
       icon: '🎨',
     },
     backend: {
       name: 'Backend',
       items: ['Java Spring', 'SpringBoot', 'ASP.NET', 'Node.js', 'Python'],
-      color: '#68a063',
+      color: '#40a02b',
       icon: '⚙️',
     },
     mobile: {
       name: 'Mobile',
       items: ['Android (Java)', 'iOS (Swift)'],
-      color: '#a4c639',
+      color: '#179299',
       icon: '📱',
     },
     database: {
       name: 'Database',
       items: ['Oracle', 'MySQL', 'PostgreSQL'],
-      color: '#f80000',
+      color: '#d20f39',
       icon: '🗄️',
     },
     etc: {
       name: 'Others',
       items: ['API Gateway', 'SSO', 'REST API', 'Git'],
-      color: '#8b5cf6',
+      color: '#8839ef',
       icon: '🔧',
     },
   },
@@ -113,12 +113,13 @@ export const resumeData = {
   totalExperience: '11+ years',
 };
 
+// Catppuccin Latte colors for rooms
 export const roomsConfig = [
   {
     id: 'welcome',
     name: 'Welcome',
     position: [0, 0],
-    color: '#a8e6cf',
+    color: '#ccd0da', // surface0
     size: 6,
     description: 'Start here!',
   },
@@ -126,7 +127,7 @@ export const roomsConfig = [
     id: 'skills',
     name: 'Skills',
     position: [10, 0],
-    color: '#dcedc1',
+    color: '#bcc0cc', // surface1
     size: 8,
     description: 'My tech stack',
   },
@@ -134,7 +135,7 @@ export const roomsConfig = [
     id: 'experience',
     name: 'Experience',
     position: [0, -12],
-    color: '#ffd3b6',
+    color: '#acb0be', // surface2
     size: 8,
     description: 'Work history',
   },
@@ -142,7 +143,7 @@ export const roomsConfig = [
     id: 'contact',
     name: 'Contact',
     position: [10, -12],
-    color: '#ffaaa5',
+    color: '#9ca0b0', // overlay0
     size: 6,
     description: 'Get in touch',
   },
