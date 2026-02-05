@@ -1,47 +1,118 @@
-import { Suspense, useState, useCallback } from 'react'
-import { Canvas } from '@react-three/fiber'
-import Game from './components/game/Game'
-import UI from './components/ui/UI'
-import LoadingScreen from './components/ui/LoadingScreen'
+import { useState } from 'react'
+import Terminal from './components/Terminal'
+import { themes } from './data/resume'
+
+function DesktopView({ theme, onOpen }) {
+  return (
+    <div
+      className="h-screen w-screen flex flex-col items-center justify-center select-none"
+      style={{ backgroundColor: '#0a0a0a' }}
+    >
+      <div style={{ color: theme.comment, fontSize: '13px', marginBottom: '20px' }}>
+        Session ended.
+      </div>
+      <button
+        onClick={onOpen}
+        className="cursor-pointer active:scale-95"
+        style={{
+          padding: '8px 24px',
+          borderRadius: '6px',
+          background: 'none',
+          border: `1px solid ${theme.comment}60`,
+          color: theme.comment,
+          fontSize: '12px',
+          fontFamily: 'monospace',
+          transition: 'transform 0.1s',
+        }}
+      >
+        &gt;_ restart
+      </button>
+    </div>
+  )
+}
+
+function DockBar({ theme, onRestore }) {
+  return (
+    <div
+      className="fixed left-0 right-0 flex justify-center"
+      style={{ bottom: '24px', padding: '8px', zIndex: 100 }}
+    >
+      <button
+        onClick={onRestore}
+        className="flex items-center gap-2 cursor-pointer active:scale-95"
+        style={{
+          padding: '6px 16px',
+          borderRadius: '10px',
+          background: `${theme.headerBg}ee`,
+          border: `1px solid ${theme.border}`,
+          color: theme.fg,
+          fontSize: '12px',
+          backdropFilter: 'blur(10px)',
+          boxShadow: `0 2px 12px rgba(0,0,0,0.3)`,
+          transition: 'transform 0.1s',
+        }}
+      >
+        <span style={{ fontSize: '13px', fontFamily: 'monospace', color: theme.comment }}>&gt;_</span>
+        devterminal
+      </button>
+    </div>
+  )
+}
 
 function App() {
-  const [currentRoom, setCurrentRoom] = useState('welcome')
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [playerPosition, setPlayerPosition] = useState([0, 0, 0])
+  const [themeName, setThemeName] = useState('frappe')
+  const [windowState, setWindowState] = useState('normal')
+  const theme = themes[themeName] || themes.default
 
-  const handleLoaded = useCallback(() => {
-    setTimeout(() => setIsLoaded(true), 800)
-  }, [])
+  if (windowState === 'closed') {
+    return <DesktopView theme={theme} onOpen={() => setWindowState('normal')} />
+  }
+
+  const isMaximized = windowState === 'maximized'
+  const isMinimized = windowState === 'minimized'
 
   return (
-    <div className="w-screen h-screen overflow-hidden cursor-pointer">
-      <LoadingScreen isLoaded={isLoaded} />
-
-      <Canvas
-        shadows
-        orthographic
-        camera={{
-          zoom: 50,
-          position: [20, 20, 20],
-          near: 0.1,
-          far: 1000,
+    <div
+      className={`h-screen w-screen flex items-center justify-center ${isMaximized ? '' : 'p-3 sm:p-8 md:p-12'}`}
+      style={{ backgroundColor: theme.headerBg, paddingTop: isMaximized ? 0 : '24px', paddingBottom: isMaximized ? 0 : '24px' }}
+    >
+      <div
+        className={`overflow-hidden overflow-x-hidden terminal-glow transition-all duration-300 ${
+          isMaximized
+            ? 'w-full h-full'
+            : 'w-full h-full sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl'
+        } ${isMinimized ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
+        style={{
+          margin: isMaximized ? 0 : '0 15px',
+          border: `1px solid ${theme.border}`,
+          boxShadow: `0 0 80px ${theme.accent}08, 0 0 160px ${theme.accent}04`,
+          transformOrigin: 'bottom center',
         }}
-        onCreated={handleLoaded}
-        style={{ background: 'linear-gradient(180deg, #eff1f5 0%, #e6e9ef 50%, #dce0e8 100%)' }}
       >
-        <Suspense fallback={null}>
-          <Game
-            setCurrentRoom={setCurrentRoom}
-            setPlayerPosition={setPlayerPosition}
-          />
-        </Suspense>
-      </Canvas>
+        <Terminal
+          themeName={themeName}
+          setThemeName={setThemeName}
+          windowState={windowState}
+          setWindowState={setWindowState}
+        />
+      </div>
 
-      <UI
-        currentRoom={currentRoom}
-        playerPosition={playerPosition}
-        isLoaded={isLoaded}
-      />
+      {isMinimized && <DockBar theme={theme} onRestore={() => setWindowState('normal')} />}
+
+      {!isMaximized && (
+        <div
+          className="fixed left-0 right-0 flex items-center justify-center select-none"
+          style={{
+            bottom: '0px',
+            padding: '4px 10px',
+            color: theme.comment,
+            fontSize: '10px',
+            zIndex: 50,
+          }}
+        >
+          <span>© 2025 Husband of Rebekah — Perfectionists with deadlines!</span>
+        </div>
+      )}
     </div>
   )
 }
