@@ -136,7 +136,7 @@ export default function useTerminal({ theme, setThemeName, themes }) {
 
       case 'cd':
         if (args) {
-          addOutput('error', `cd: permission denied: ${args}\nThis terminal is read-only. Try 'cat secret.txt' if you're curious.`)
+          addOutput('error', `cd: permission denied: ${args}\nThis terminal is read-only. Try 'ls' to look around.`)
         } else {
           addOutput('system', '~')
         }
@@ -145,6 +145,9 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       case 'cat':
         if (args === 'secret.txt' || args === 'secret') {
           addOutput('output', { type: 'easter-profile' })
+        } else if (args) {
+          addOutput('error', `cat: ${args}: No such file or directory`)
+          addOutput('system', 'Hint: Some files are hidden. Look carefully at \'ls\' output.')
         } else {
           addOutput('system', [
             '  /\\_/\\  ',

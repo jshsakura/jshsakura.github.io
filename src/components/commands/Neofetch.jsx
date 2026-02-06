@@ -145,7 +145,7 @@ export default function Neofetch({ theme, themeName }) {
 
   const palette = [
     theme.error, theme.success, theme.accent, theme.prompt,
-    '#e6b450', '#a78bfa', '#f59e0b', theme.fg,
+    theme.comment, theme.border, theme.cursorColor, theme.fg,
   ]
 
   return (

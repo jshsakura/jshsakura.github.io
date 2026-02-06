@@ -78,15 +78,15 @@ function RickrollPopup({ onClose }) {
         >
           <div style={{ color: '#ff6b6b' }}>
             <span style={{ color: '#fff', opacity: 0.7 }}>Call Stack:</span><br/>
-            at UserTrust (./src/components/Terminal.jsx:42:7)<br/>
-            at NeverGonnaGiveYouUp (./src/easter/rick.js:1:1)<br/>
-            at NeverGonnaLetYouDown (./src/easter/rick.js:2:1)<br/>
-            at NeverGonnaRunAround (./src/easter/rick.js:3:1)<br/>
-            at AndDesertYou (./src/easter/rick.js:4:1)<br/>
-            at NeverGonnaMakeYouCry (./src/easter/rick.js:5:1)<br/>
-            at NeverGonnaSayGoodbye (./src/easter/rick.js:6:1)<br/>
-            at NeverGonnaTellALie (./src/easter/rick.js:7:1)<br/>
-            at AndHurtYou (./src/easter/rick.js:8:1)<br/>
+            at UserTrust (&lt;anonymous&gt;:42:7)<br/>
+            at NeverGonnaGiveYouUp (node_modules/.pnpm/♫:1:1)<br/>
+            at NeverGonnaLetYouDown (node_modules/.pnpm/♫:2:1)<br/>
+            at NeverGonnaRunAround (node_modules/.pnpm/♫:3:1)<br/>
+            at AndDesertYou (node_modules/.pnpm/♫:4:1)<br/>
+            at NeverGonnaMakeYouCry (node_modules/.pnpm/♫:5:1)<br/>
+            at NeverGonnaSayGoodbye (node_modules/.pnpm/♫:6:1)<br/>
+            at NeverGonnaTellALie (node_modules/.pnpm/♫:7:1)<br/>
+            at AndHurtYou (node_modules/.pnpm/♫:8:1)<br/>
           </div>
           <div style={{ color: '#e5c07b', marginTop: '8px' }}>
             ⚠ Warning: Cannot update a component while rendering<br/>
