@@ -167,27 +167,52 @@ function LolcatText({ text }) {
 }
 
 function EasterProfile({ theme }) {
+  const [stage, setStage] = useState(0)
+  
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setStage(1), 800),
+      setTimeout(() => setStage(2), 1600),
+      setTimeout(() => setStage(3), 2400),
+      setTimeout(() => setStage(4), 3200),
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  const messages = [
+    { text: 'cat: reading secret.txt ...', color: theme.fg },
+    { text: 'Decrypting contents...', color: theme.comment },
+    { text: 'Verifying access level...', color: theme.comment },
+    { text: 'Access granted. Loading profile...', color: theme.success },
+  ]
+
   return (
     <div className="space-y-2 mt-2">
-      <div className="text-sm" style={{ color: theme.success }}>
-        cat: reading secret.txt ... access granted.
-      </div>
-      <iframe
-        src="https://www.youtube.com/embed/rlrzUYTXOPI?autoplay=1"
-        title="Secret Profile"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        style={{
-          maxWidth: '400px',
-          width: '100%',
-          aspectRatio: '9 / 16',
-          borderRadius: '8px',
-          border: `1px solid ${theme.border}`,
-        }}
-      />
-      <div className="text-xs" style={{ color: theme.comment }}>
-        You found the secret. Not many visitors get here.
-      </div>
+      {messages.slice(0, stage).map((msg, i) => (
+        <div key={i} className="text-sm" style={{ color: msg.color }}>
+          {msg.text}
+        </div>
+      ))}
+      {stage >= 4 && (
+        <>
+          <iframe
+            src="https://www.youtube.com/embed/rlrzUYTXOPI?autoplay=1"
+            title="Secret Profile"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{
+              maxWidth: '400px',
+              width: '100%',
+              aspectRatio: '9 / 16',
+              borderRadius: '8px',
+              border: `1px solid ${theme.border}`,
+            }}
+          />
+          <div className="text-sm" style={{ color: theme.comment }}>
+            You found the secret. Not many visitors get here.
+          </div>
+        </>
+      )}
     </div>
   )
 }
