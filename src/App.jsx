@@ -5,7 +5,7 @@ import { themes } from './data/resume'
 function DesktopView({ theme, onOpen }) {
   return (
     <div
-      className="h-screen w-screen flex flex-col items-center justify-center select-none"
+      className="h-dvh w-screen flex flex-col items-center justify-center select-none"
       style={{ backgroundColor: '#0a0a0a' }}
     >
       <div style={{ color: theme.comment, fontSize: '13px', marginBottom: '20px' }}>
@@ -73,8 +73,12 @@ function App() {
 
   return (
     <div
-      className={`h-screen w-screen flex items-center justify-center ${isMaximized ? '' : 'p-3 sm:p-8 md:p-12'}`}
-      style={{ backgroundColor: theme.headerBg, paddingTop: isMaximized ? 0 : '24px', paddingBottom: isMaximized ? 0 : '24px' }}
+      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'p-3 sm:p-8 md:p-12'}`}
+      style={{ 
+        backgroundColor: theme.headerBg, 
+        paddingTop: isMaximized ? 'env(safe-area-inset-top, 0px)' : 'max(24px, env(safe-area-inset-top, 0px))', 
+        paddingBottom: isMaximized ? 'env(safe-area-inset-bottom, 0px)' : 'max(24px, env(safe-area-inset-bottom, 0px))' 
+      }}
     >
       <div
         className={`overflow-hidden overflow-x-hidden terminal-glow transition-all duration-300 ${

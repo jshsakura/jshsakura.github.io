@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
-import { resumeData, commands as commandList } from '../data/resume'
+import { resumeData, commands as commandList, themes } from '../data/resume'
 
 const VISIBLE_COMMANDS = commandList.map(c => c.cmd.split(' ')[0])
 const HIDDEN_COMMANDS = ['ls', 'cd', 'cat', 'pwd', 'rm', 'sudo', 'exit', 'ping', 'cowsay', 'vim', 'nano', 'vi', 'whois', 'man', 'echo', 'mkdir', 'touch', 'mv', 'cp', 'ssh', 'wget', 'curl', 'matrix', 'hack', 'fortune', 'sl', 'top', 'htop', 'git', 'docker', 'python', 'node', 'brew', 'apt', 'apt-get', 'uname', 'hostname', 'ifconfig', 'traceroute', 'who', 'w', 'cal', 'uptime', 'free', 'yes', 'grep', 'awk', 'sed', 'chmod', 'chown', 'nmap', 'telnet', 'make', 'hello', 'hi', '42', 'flip', 'lolcat', 'screenfetch', 'figlet']
@@ -628,10 +628,30 @@ export default function useTerminal({ theme, setThemeName, themes }) {
     const lower = input.toLowerCase()
     const parts = lower.split(/\s+/)
 
-    // Argument autocomplete (e.g. "cat sec" → "cat secret.txt")
+    // Argument autocomplete
     if (parts.length >= 2) {
       const cmd = parts[0]
       const arg = parts.slice(1).join(' ')
+      
+      // Theme autocomplete (e.g. "theme dra" → "theme dracula")
+      if (cmd === 'theme') {
+        const themeNames = Object.keys(themes)
+        const themeMatches = themeNames.filter(t => t.startsWith(arg))
+        if (themeMatches.length === 1) return `${cmd} ${themeMatches[0]}`
+        if (themeMatches.length > 1) {
+          addOutput('system', themeMatches.join('  '))
+          const common = themeMatches.reduce((a, b) => {
+            let i = 0
+            while (i < a.length && i < b.length && a[i] === b[i]) i++
+            return a.slice(0, i)
+          })
+          if (common.length > arg.length) return `${cmd} ${common}`
+          return null
+        }
+        return null
+      }
+      
+      // File autocomplete (e.g. "cat sec" → "cat secret.txt")
       const files = ['about/', 'skills/', 'career/', 'projects/', 'contact/', 'secret.txt']
       const fileMatches = files.filter(f => f.startsWith(arg))
       if (fileMatches.length === 1) return `${cmd} ${fileMatches[0]}`
