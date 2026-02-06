@@ -7,6 +7,22 @@ function parseDate(str) {
   return parseInt(y) * 100 + parseInt(m)
 }
 
+function TechBadge({ tech, theme }) {
+  const color = getTechColor(tech)
+  return (
+    <span
+      className="text-xs rounded"
+      style={{
+        padding: '1px 6px',
+        backgroundColor: color ? `${color}30` : `${theme.accent}25`,
+        color: color || theme.comment,
+      }}
+    >
+      {tech}
+    </span>
+  )
+}
+
 export default function Career({ theme }) {
   const timeline = resumeData.experience.flatMap(exp =>
     exp.projects.map(proj => ({
@@ -64,7 +80,7 @@ export default function Career({ theme }) {
               </div>
 
               {/* Content */}
-              <div className="flex-1 min-w-0 pb-5">
+              <div className="flex-1 min-w-0 pb-6">
                 <div className="text-sm font-semibold" style={{ color: theme.fg }}>
                   {proj.name}
                 </div>
@@ -75,22 +91,10 @@ export default function Career({ theme }) {
                 <div className="text-sm mt-1" style={{ color: theme.comment, lineHeight: 1.6 }}>
                   {proj.description}
                 </div>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {proj.tech.map((t) => {
-                    const color = getTechColor(t)
-                    return (
-                      <span
-                        key={t}
-                        className="text-sm px-2 py-0.5 rounded"
-                        style={{
-                          backgroundColor: color ? `${color}55` : `${theme.accent}40`,
-                          color: color || theme.accent,
-                        }}
-                      >
-                        {t}
-                      </span>
-                    )
-                  })}
+                <div className="flex flex-wrap gap-1 mt-1.5">
+                  {proj.tech.map((t) => (
+                    <TechBadge key={t} tech={t} theme={theme} />
+                  ))}
                 </div>
               </div>
             </div>

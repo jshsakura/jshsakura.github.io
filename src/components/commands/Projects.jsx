@@ -11,11 +11,11 @@ function TechBadge({ tech, theme }) {
   const color = getTechColor(tech)
   return (
     <span
-      className="text-sm rounded"
+      className="text-xs rounded"
       style={{
-        padding: '2px 8px',
-        backgroundColor: color ? `${color}55` : `${theme.accent}40`,
-        color: color || theme.accent,
+        padding: '1px 6px',
+        backgroundColor: color ? `${color}30` : `${theme.accent}25`,
+        color: color || theme.comment,
       }}
     >
       {tech}

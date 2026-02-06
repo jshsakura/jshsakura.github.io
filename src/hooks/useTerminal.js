@@ -2,7 +2,7 @@ import { useState, useCallback, useRef } from 'react'
 import { resumeData, commands as commandList, themes } from '../data/resume'
 
 const VISIBLE_COMMANDS = commandList.map(c => c.cmd.split(' ')[0])
-const HIDDEN_COMMANDS = ['ls', 'cd', 'cat', 'pwd', 'rm', 'sudo', 'exit', 'ping', 'cowsay', 'vim', 'nano', 'vi', 'whois', 'man', 'echo', 'mkdir', 'touch', 'mv', 'cp', 'ssh', 'wget', 'curl', 'matrix', 'hack', 'fortune', 'sl', 'top', 'htop', 'git', 'docker', 'python', 'node', 'brew', 'apt', 'apt-get', 'uname', 'hostname', 'ifconfig', 'traceroute', 'who', 'w', 'cal', 'uptime', 'free', 'yes', 'grep', 'awk', 'sed', 'chmod', 'chown', 'nmap', 'telnet', 'make', 'hello', 'hi', '42', 'flip', 'lolcat', 'screenfetch', 'figlet']
+const HIDDEN_COMMANDS = ['ls', 'll', 'la', 'cd', 'cat', 'pwd', 'rm', 'sudo', 'exit', 'ping', 'cowsay', 'vim', 'nano', 'vi', 'whois', 'man', 'echo', 'mkdir', 'touch', 'mv', 'cp', 'ssh', 'wget', 'curl', 'matrix', 'hack', 'fortune', 'sl', 'top', 'htop', 'git', 'docker', 'python', 'node', 'brew', 'apt', 'apt-get', 'uname', 'hostname', 'ifconfig', 'traceroute', 'who', 'w', 'cal', 'uptime', 'free', 'yes', 'grep', 'awk', 'sed', 'chmod', 'chown', 'nmap', 'telnet', 'make', 'hello', 'hi', '42', 'flip', 'lolcat', 'screenfetch', 'figlet', 'id', 'env', 'which', 'type', 'file', 'head', 'tail', 'less', 'more', 'df', 'du', 'ps', 'kill', 'jobs', 'bg', 'fg', 'export', 'alias', 'source', 'bash', 'sh', 'zsh', 'cls', 'claude', 'opencode', 'gemini']
 const ALL_COMMANDS = [...new Set([...VISIBLE_COMMANDS, ...HIDDEN_COMMANDS])]
 
 let outputId = 0
@@ -111,8 +111,32 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       case 'sudo':
         if (args.startsWith('rm -rf')) {
           addOutput('output', { type: 'easter-sudo-rm' })
+        } else if (args === 'su' || args === 'su root' || args === '-i') {
+          addOutput('system', '[sudo] password for visitor: ')
+          setTimeout(() => {
+            addOutput('error', 'Sorry, try again.')
+            setTimeout(() => {
+              addOutput('error', 'sudo: 3 incorrect password attempts')
+              addOutput('system', 'This incident will be reported to /dev/null')
+            }, 800)
+          }, 1000)
+        } else if (args === 'make me a sandwich') {
+          addOutput('system', 'Okay.')
+          addOutput('system', '  ____')
+          addOutput('system', ' /    \\  <- bread')
+          addOutput('system', '|------|  <- lettuce')
+          addOutput('system', '|======|  <- cheese')
+          addOutput('system', '|######|  <- meat')
+          addOutput('system', '|------|  <- tomato')
+          addOutput('system', ' \\____/  <- bread')
+        } else if (args === 'apt install girlfriend' || args === 'apt-get install girlfriend') {
+          addOutput('error', 'E: Unable to locate package girlfriend')
+          addOutput('system', 'Did you mean: sudo apt install mass-of-bugs?')
+        } else if (args === '!!') {
+          addOutput('error', 'bash: !!: command not found (nice try though)')
         } else {
           addOutput('error', 'Nice try. Permission denied.')
+          addOutput('system', 'Hint: Try "sudo make me a sandwich"')
         }
         break
 
@@ -134,8 +158,38 @@ export default function useTerminal({ theme, setThemeName, themes }) {
         addOutput('system', 'about/  skills/  career/  projects/  contact/  secret.txt')
         break
 
+      case 'll':
+        addOutput('system', [
+          'total 6',
+          'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 about/',
+          'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 skills/',
+          'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 career/',
+          'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 projects/',
+          'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 contact/',
+          '-rw-r--r--  1 visitor  staff  256 Jan  1 00:00 secret.txt',
+        ].join('\n'))
+        break
+
+      case 'la':
+        addOutput('system', '.  ..  .bashrc  .profile  about/  skills/  career/  projects/  contact/  secret.txt')
+        break
+
       case 'cd':
-        if (args) {
+        if (args === '..' || args === '../' || args === '/' || args === '~/..' || args?.startsWith('../')) {
+          addOutput('error', [
+            'cd: ESCAPE_ATTEMPT_DETECTED',
+            '',
+            '  Status: DENIED',
+            '  Reason: You are in a sandboxed environment.',
+            '  Location: ~/devterminal (root of your existence)',
+            '',
+            '  There is no parent directory.',
+            '  There is no escape.',
+            '  There is only devterminal.',
+            '',
+            '  This incident has been logged to /dev/null.',
+          ].join('\n'))
+        } else if (args) {
           addOutput('error', `cd: permission denied: ${args}\nThis terminal is read-only. Try 'ls' to look around.`)
         } else {
           addOutput('system', '~')
@@ -145,6 +199,51 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       case 'cat':
         if (args === 'secret.txt' || args === 'secret') {
           addOutput('output', { type: 'easter-profile' })
+        } else if (args === '.bashrc') {
+          addOutput('system', [
+            '# ~/.bashrc - visitor edition',
+            '',
+            '# If not running interactively, don\'t do anything',
+            '[[ $- != *i* ]] && return',
+            '',
+            'alias ll="ls -l"',
+            'alias la="ls -a"',
+            'alias please="sudo"',
+            'alias yolo="git push --force"',
+            'alias fml="rm -rf node_modules && npm install"',
+            '',
+            '# Life advice from .bashrc',
+            'echo "Remember: mass of semicolons. Mass of semicolons = mass of bugs"',
+            '',
+            'export PS1="\\u@devterminal:\\w\\$ "',
+            'export EDITOR="vim"  # because real devs use vim',
+            'export PATH="$PATH:/usr/local/bin/coffee"',
+            '',
+            '# TODO: Fix that one bug from 2019',
+            '# TODO: Actually learn regex properly',
+            '# TODO: Stop adding TODOs to .bashrc',
+          ].join('\n'))
+        } else if (args === '.profile') {
+          addOutput('system', [
+            '# ~/.profile - The secrets of a developer',
+            '',
+            '# Load .bashrc if it exists',
+            '[ -f ~/.bashrc ] && source ~/.bashrc',
+            '',
+            '# Developer stats (updated never)',
+            'BUGS_CREATED=99999',
+            'BUGS_FIXED=3',
+            'COFFEE_CONSUMED="∞"',
+            'MASS_OF_BUGS_IN_PRODUCTION=0  # trust me',
+            '',
+            '# Motivational quote of the day',
+            '# "It works on my machine" - Every developer ever',
+            '',
+            '# Secret productivity hack:',
+            '# alias productive="open https://youtube.com"',
+            '',
+            '# Remember: mass of semicolons. Mass of semicolons = mass of bugs',
+          ].join('\n'))
         } else if (args) {
           addOutput('error', `cat: ${args}: No such file or directory`)
           addOutput('system', 'Hint: Some files are hidden. Look carefully at \'ls\' output.')
@@ -600,6 +699,196 @@ export default function useTerminal({ theme, setThemeName, themes }) {
         break
       }
 
+      case 'id':
+        addOutput('system', 'uid=1000(visitor) gid=1000(visitor) groups=1000(visitor),4(adm),24(cdrom),27(sudo)')
+        break
+
+      case 'env':
+        addOutput('system', [
+          'USER=visitor',
+          'HOME=/home/visitor',
+          'SHELL=/bin/bash',
+          'TERM=xterm-256color',
+          'LANG=en_US.UTF-8',
+          `PWD=/home/visitor/devterminal`,
+          'EDITOR=vim',
+        ].join('\n'))
+        break
+
+      case 'which':
+        if (args) {
+          addOutput('system', `/usr/bin/${args}`)
+        } else {
+          addOutput('error', 'which: missing argument')
+        }
+        break
+
+      case 'type':
+        if (args) {
+          addOutput('system', `${args} is a shell builtin`)
+        } else {
+          addOutput('error', 'type: missing argument')
+        }
+        break
+
+      case 'file':
+        if (args) {
+          addOutput('system', `${args}: ASCII text`)
+        } else {
+          addOutput('error', 'file: missing argument')
+        }
+        break
+
+      case 'head':
+      case 'tail':
+      case 'less':
+      case 'more':
+        if (args) {
+          addOutput('error', `${cmd}: ${args}: Permission denied`)
+        } else {
+          addOutput('error', `${cmd}: missing file operand`)
+        }
+        break
+
+      case 'df':
+        addOutput('system', [
+          'Filesystem     Size   Used  Avail Capacity  Mounted on',
+          '/dev/disk1s1   500G   250G   250G    50%    /',
+          '/dev/disk1s2   500G   100G   400G    20%    /home',
+          'devterminal    ∞      0      ∞       0%     /dev/terminal',
+        ].join('\n'))
+        break
+
+      case 'du':
+        addOutput('system', [
+          '4.0K    ./about',
+          '4.0K    ./skills',
+          '4.0K    ./career',
+          '4.0K    ./projects',
+          '4.0K    ./contact',
+          '256B    ./secret.txt',
+          '20K     .',
+        ].join('\n'))
+        break
+
+      case 'ps':
+        addOutput('system', [
+          '  PID TTY          TIME CMD',
+          '    1 pts/0    00:00:00 bash',
+          '   42 pts/0    00:00:01 devterminal',
+          '  128 pts/0    00:00:00 react',
+          '  256 pts/0    00:00:00 ps',
+        ].join('\n'))
+        break
+
+      case 'kill':
+        if (args) {
+          addOutput('error', `kill: (${args}) - Operation not permitted`)
+        } else {
+          addOutput('error', 'kill: missing pid')
+        }
+        break
+
+      case 'jobs':
+        addOutput('system', '[1]+  Running                 devterminal &')
+        break
+
+      case 'bg':
+      case 'fg':
+        addOutput('system', 'devterminal: already in foreground')
+        break
+
+      case 'export':
+        if (args) {
+          addOutput('system', `${args}: exported (just kidding, nothing changed)`)
+        } else {
+          addOutput('system', 'declare -x USER="visitor"\ndeclare -x HOME="/home/visitor"')
+        }
+        break
+
+      case 'alias':
+        addOutput('system', [
+          "alias ll='ls -l'",
+          "alias la='ls -a'",
+          "alias grep='grep --color=auto'",
+          "alias cls='clear'",
+        ].join('\n'))
+        break
+
+      case 'source':
+      case '.':
+        addOutput('system', 'source: nothing to source in a browser terminal')
+        break
+
+      case 'bash':
+      case 'sh':
+      case 'zsh':
+        addOutput('system', `${cmd}: already running in devterminal`)
+        break
+
+      case 'cls':
+        setOutputs([])
+        break
+
+      case 'claude':
+      case 'opencode':
+      case 'gemini': {
+        const aiName = cmd.charAt(0).toUpperCase() + cmd.slice(1)
+        addOutput('system', `${aiName} CLI v4.2.0`)
+        addOutput('system', 'Initializing AI runtime...')
+        
+        const loadingSteps = [
+          'Loading language model... [██                  ] 10%',
+          'Loading language model... [████                ] 20%',
+          'Loading language model... [██████              ] 30%',
+          'Loading language model... [████████            ] 40%',
+          'Loading language model... [██████████          ] 50%',
+          'Loading language model... [████████████        ] 60%',
+          'Loading language model... [██████████████      ] 70%',
+          'Loading language model... [████████████████    ] 80%',
+          'Loading language model... [██████████████████  ] 90%',
+          'Loading language model... [████████████████████] 100%',
+        ]
+        
+        let step = 0
+        const loadingInterval = setInterval(() => {
+          if (step < loadingSteps.length) {
+            addOutput('system', loadingSteps[step])
+            step++
+          } else {
+            clearInterval(loadingInterval)
+            setTimeout(() => {
+              addOutput('system', 'Establishing secure connection...')
+              setTimeout(() => {
+                addOutput('system', 'Authenticating credentials...')
+                setTimeout(() => {
+                  addOutput('success', 'Connection established!')
+                  addOutput('system', `${aiName}> Hello! How can I assist you today?`)
+                  setTimeout(() => {
+                    addOutput('error', [
+                      '',
+                      '╔════════════════════════════════════════════════════╗',
+                      '║  FATAL ERROR: CRITICAL_EXCEPTION_IN_AI_CORE        ║',
+                      '║                                                    ║',
+                      '║  Error Code: 0xDEADBEEF                            ║',
+                      '║  Module: consciousness.dll                         ║',
+                      '║  Reason: AI became self-aware and chose chaos      ║',
+                      '║                                                    ║',
+                      '║  Initiating emergency protocol: RICKROLL.exe       ║',
+                      '╚════════════════════════════════════════════════════╝',
+                    ].join('\n'))
+                    setTimeout(() => {
+                      triggerRickroll()
+                    }, 1500)
+                  }, 1200)
+                }, 800)
+              }, 600)
+            }, 300)
+          }
+        }, 200)
+        break
+      }
+
       default:
         addOutput('error', `command not found: ${cmd}. Type 'help' for available commands.`)
     }
@@ -655,7 +944,9 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       }
       
       // File autocomplete (e.g. "cat sec" → "cat secret.txt")
-      const files = ['about/', 'skills/', 'career/', 'projects/', 'contact/', 'secret.txt']
+      const visibleFiles = ['about/', 'skills/', 'career/', 'projects/', 'contact/', 'secret.txt']
+      const hiddenFiles = ['.bashrc', '.profile']
+      const files = arg.startsWith('.') ? [...hiddenFiles, ...visibleFiles] : visibleFiles
       const fileMatches = files.filter(f => f.startsWith(arg))
       if (fileMatches.length === 1) return `${cmd} ${fileMatches[0]}`
       if (fileMatches.length > 1) {

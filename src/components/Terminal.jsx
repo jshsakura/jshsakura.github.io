@@ -65,13 +65,13 @@ function RickrollPopup({ onClose }) {
 
         <div
           style={{
-            padding: '20px 24px',
+            padding: '15px 20px',
             fontFamily: 'monospace',
-            fontSize: '13px',
-            lineHeight: 2,
-            opacity: 0.4,
+            fontSize: '15px',
+            lineHeight: 1.8,
+            opacity: 0.5,
             columns: '2',
-            columnGap: '40px',
+            columnGap: '30px',
             height: '100%',
             overflow: 'hidden',
           }}

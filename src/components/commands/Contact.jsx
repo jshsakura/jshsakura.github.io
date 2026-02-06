@@ -113,7 +113,7 @@ function ContactForm({ theme }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 mt-4" style={{ maxWidth: '520px' }} onClick={(e) => e.stopPropagation()}>
-      <div className="text-sm font-semibold" style={{ color: theme.accent }}>
+      <div className="text-sm font-semibold" style={{ color: theme.accent, marginBottom: '10px' }}>
         Send me a message:
       </div>
 

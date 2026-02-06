@@ -270,7 +270,7 @@ export default function TerminalOutput({ outputs, theme }) {
           )}
 
           {entry.type === 'error' && (
-            <div className="text-sm" style={{ color: theme.error }}>
+            <div className="text-sm whitespace-pre-wrap" style={{ color: theme.error }}>
               {entry.content}
             </div>
           )}
