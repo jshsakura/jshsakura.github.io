@@ -91,7 +91,6 @@ function App() {
           marginLeft: isMaximized ? 0 : undefined,
           marginRight: isMaximized ? 0 : undefined,
           border: `1px solid ${theme.border}`,
-          boxShadow: `0 0 80px ${theme.accent}08, 0 0 160px ${theme.accent}04`,
           transformOrigin: 'bottom center',
         }}
       >
