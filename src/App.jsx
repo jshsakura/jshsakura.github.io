@@ -84,7 +84,7 @@ function App() {
         className={`overflow-hidden overflow-x-hidden transition-all duration-300 ${
           isMaximized
             ? 'w-full h-full'
-            : 'w-full max-h-[90vh] rounded-xl sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
+            : 'w-full h-full max-h-[90vh] rounded-xl sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
         } ${isMinimized ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         style={{
           margin: isMaximized ? 0 : undefined,
