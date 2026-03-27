@@ -247,7 +247,10 @@ export default function TerminalOutput({ outputs, theme }) {
   }, [outputs.length])
 
   return (
-    <div className="flex-1 overflow-y-auto overflow-x-hidden space-y-3 min-h-0" style={{ padding: '20px 15px' }}>
+    <div
+      className="flex-1 overflow-y-auto overflow-x-hidden space-y-3 min-h-0"
+      style={{ padding: '20px 15px' }}
+    >
       {outputs.map((entry) => (
         <div key={entry.id} className="output-line">
           {entry.type === 'command' && (

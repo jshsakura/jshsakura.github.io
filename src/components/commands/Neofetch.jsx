@@ -150,13 +150,21 @@ export default function Neofetch({ theme, themeName }) {
 
   return (
     <div className="flex flex-col gap-5" style={{ padding: '5px' }}>
-      <pre className="shrink-0 leading-tight text-xs sm:text-sm" style={{ color: theme.accent }}>
+      <pre
+        className="shrink-0 leading-tight text-xs sm:text-sm hidden sm:block"
+        style={{ color: theme.accent }}
+      >
         {ASCII_ART.join('\n')}
       </pre>
+      {/* Mobile: compact header instead of ASCII art */}
+      <div className="sm:hidden flex items-center gap-2" style={{ color: theme.accent }}>
+        <span style={{ fontSize: '20px' }}>⌘</span>
+        <span className="text-base font-bold">SeungHyeon</span>
+      </div>
 
       <div className="space-y-1 min-w-0">
         {info.map((item, i) => (
-          <div key={i} className="whitespace-nowrap text-sm">
+          <div key={i} className="whitespace-nowrap overflow-hidden text-ellipsis text-xs sm:text-sm">
             {item.label ? (
               <>
                 <span style={{ color: item.color || theme.accent }} className="font-semibold">

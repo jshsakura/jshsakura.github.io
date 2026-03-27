@@ -113,3 +113,56 @@ body {
 .window-buttons:hover .window-btn-icon {
   opacity: 1;
 }
+
+/* Mobile touch feedback */
+@media (max-width: 639px) {
+  /* Smoother touch scrolling */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Larger tap targets for window buttons */
+  .window-btn {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Always show window button icons on touch devices */
+  .window-btn-icon {
+    opacity: 1;
+  }
+
+  /* Prevent text size adjustment */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
+/* Touch active feedback for buttons */
+@media (hover: none) {
+  button:active {
+    transform: scale(0.95);
+    transition: transform 0.08s ease-out;
+  }
+}
+
+/* Smooth focus transitions */
+input:focus {
+  outline: none;
+}
+
+/* Reduce animations for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .output-line {
+    animation: none;
+  }
+  .cursor-blink {
+    animation: none;
+    opacity: 1;
+  }
+  .progress-bar-fill {
+    transition: none;
+  }
+}

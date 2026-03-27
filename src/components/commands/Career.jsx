@@ -50,21 +50,22 @@ export default function Career({ theme }) {
             <div key={`${proj.company}-${proj.name}`} className="flex">
               {/* Year column */}
               <div
-                className="shrink-0 text-sm text-right font-semibold"
-                style={{ width: '40px', color: theme.prompt, paddingTop: '2px' }}
+                className="shrink-0 text-xs sm:text-sm text-right font-semibold"
+                style={{ width: '32px', color: theme.prompt, paddingTop: '2px' }}
               >
                 {showYear ? year : ''}
               </div>
 
               {/* Timeline line */}
-              <div className="flex flex-col items-center shrink-0" style={{ width: '28px' }}>
+              <div className="flex flex-col items-center shrink-0" style={{ width: '24px' }}>
                 <div
-                  className="rounded-full shrink-0"
+                  className="rounded-full shrink-0 transition-colors duration-300"
                   style={{
                     width: '8px',
                     height: '8px',
                     backgroundColor: i === 0 ? theme.success : theme.comment,
                     marginTop: '6px',
+                    boxShadow: i === 0 ? `0 0 6px ${theme.success}60` : 'none',
                   }}
                 />
                 {!isLast && (
@@ -80,15 +81,15 @@ export default function Career({ theme }) {
               </div>
 
               {/* Content */}
-              <div className="flex-1 min-w-0 pb-6">
-                <div className="text-sm font-semibold" style={{ color: theme.fg }}>
+              <div className="flex-1 min-w-0 pb-5">
+                <div className="text-xs sm:text-sm font-semibold" style={{ color: theme.fg }}>
                   {proj.name}
                 </div>
-                <div className="flex flex-wrap items-center gap-2 mt-1">
-                  <span className="text-sm" style={{ color: theme.success }}>{proj.company}</span>
-                  <span className="text-sm" style={{ color: theme.comment }}>{proj.period}</span>
+                <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                  <span className="text-xs sm:text-sm" style={{ color: theme.success }}>{proj.company}</span>
+                  <span className="text-xs" style={{ color: theme.comment }}>{proj.period}</span>
                 </div>
-                <div className="text-sm mt-1" style={{ color: theme.comment, lineHeight: 1.6 }}>
+                <div className="text-xs sm:text-sm mt-1 leading-relaxed" style={{ color: theme.comment }}>
                   {proj.description}
                 </div>
                 <div className="flex flex-wrap gap-1 mt-1.5">

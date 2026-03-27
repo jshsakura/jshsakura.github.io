@@ -11,12 +11,16 @@ const charVariants = {
   exit: { opacity: 0, scale: 0.6, transition: { duration: 0.05 } },
 }
 
-function PowerlinePrompt({ theme }) {
-  const segments = [
-    { text: ' visitor ', bg: theme.accent, fg: theme.bg },
-    { text: ' devterminal ', bg: theme.prompt, fg: theme.bg },
-    { text: ' ~ ', bg: theme.border, fg: theme.fg },
-  ]
+function PowerlinePrompt({ theme, compact = false }) {
+  const segments = compact
+    ? [
+        { text: ' $ ', bg: theme.accent, fg: theme.bg },
+      ]
+    : [
+        { text: ' visitor ', bg: theme.accent, fg: theme.bg },
+        { text: ' devterminal ', bg: theme.prompt, fg: theme.bg },
+        { text: ' ~ ', bg: theme.border, fg: theme.fg },
+      ]
 
   return (
     <div className="flex items-center shrink-0 select-none text-xs" style={{ marginRight: '10px' }}>
@@ -54,15 +58,41 @@ function PowerlinePrompt({ theme }) {
   )
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  return isMobile
+}
+
 export default function TerminalInput({ onExecute, onNavigateHistory, onAutocomplete, theme, isFocusRequested }) {
   const [input, setInput] = useState('')
   const [prevLength, setPrevLength] = useState(0)
   const [cursorPos, setCursorPos] = useState(0)
   const inputRef = useRef(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     inputRef.current?.focus()
   }, [isFocusRequested])
+
+  // Mobile: scroll input into view when soft keyboard opens
+  useEffect(() => {
+    if (!isMobile) return
+    const vv = window.visualViewport
+    if (!vv) return
+    const handleResize = () => {
+      requestAnimationFrame(() => {
+        inputRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      })
+    }
+    vv.addEventListener('resize', handleResize)
+    return () => vv.removeEventListener('resize', handleResize)
+  }, [isMobile])
 
   const syncCursor = useCallback(() => {
     requestAnimationFrame(() => {
@@ -184,10 +214,10 @@ export default function TerminalInput({ onExecute, onNavigateHistory, onAutocomp
   return (
     <div
       className="flex items-center shrink-0"
-      style={{ padding: '12px 10px', borderTop: `1px solid ${theme.border}` }}
+      style={{ padding: isMobile ? '10px 8px' : '12px 10px', borderTop: `1px solid ${theme.border}` }}
       onClick={() => inputRef.current?.focus()}
     >
-      <PowerlinePrompt theme={theme} />
+      <PowerlinePrompt theme={theme} compact={isMobile} />
       <div className="relative flex-1" style={{ minHeight: '24px' }}>
         <input
           ref={inputRef}

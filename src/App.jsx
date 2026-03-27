@@ -81,13 +81,15 @@ function App() {
       }}
     >
       <div
-        className={`overflow-hidden overflow-x-hidden terminal-glow transition-all duration-300 ${
+        className={`overflow-hidden overflow-x-hidden transition-all duration-300 ${
           isMaximized
             ? 'w-full h-full'
-            : 'w-full h-full sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl'
+            : 'w-full h-full sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
         } ${isMinimized ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         style={{
-          margin: isMaximized ? 0 : '0 15px',
+          margin: isMaximized ? 0 : undefined,
+          marginLeft: isMaximized ? 0 : undefined,
+          marginRight: isMaximized ? 0 : undefined,
           border: `1px solid ${theme.border}`,
           boxShadow: `0 0 80px ${theme.accent}08, 0 0 160px ${theme.accent}04`,
           transformOrigin: 'bottom center',

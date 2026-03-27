@@ -254,14 +254,14 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
       style={{ '--scrollbar-color': theme.scrollbar }}
     >
       <div
-        className="flex items-center gap-3 shrink-0 select-none"
+        className="flex items-center gap-2 sm:gap-3 shrink-0 select-none"
         style={{
           padding: '6px 10px',
           backgroundColor: theme.headerBg,
           borderBottom: `1px solid ${theme.border}`,
         }}
       >
-        <div className="flex gap-2.5 window-buttons">
+        <div className="flex gap-2 sm:gap-2.5 window-buttons">
           <button
             className="rounded-full bg-[#ff5f57] window-btn cursor-pointer"
             onClick={() => setWindowState('closed')}
@@ -270,14 +270,14 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             <span className="window-btn-icon">✕</span>
           </button>
           <button
-            className="rounded-full bg-[#febc2e] window-btn cursor-pointer"
+            className="rounded-full bg-[#febc2e] window-btn cursor-pointer hidden sm:flex"
             onClick={() => setWindowState('minimized')}
             title="Minimize"
           >
             <span className="window-btn-icon">−</span>
           </button>
           <button
-            className="rounded-full bg-[#28c840] window-btn cursor-pointer"
+            className="rounded-full bg-[#28c840] window-btn cursor-pointer hidden sm:flex"
             onClick={() => setWindowState(windowState === 'maximized' ? 'normal' : 'maximized')}
             title={windowState === 'maximized' ? 'Restore' : 'Maximize'}
           >
@@ -285,10 +285,11 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
           </button>
         </div>
         <div
-          className="flex-1 text-center text-sm"
+          className="flex-1 text-center text-xs sm:text-sm truncate"
           style={{ color: theme.comment }}
         >
-          visitor@devterminal:~
+          <span className="hidden sm:inline">visitor@devterminal:~</span>
+          <span className="sm:hidden">devterminal</span>
         </div>
         <div className="shrink-0" style={{ color: theme.comment, fontSize: '10px', fontVariantNumeric: 'tabular-nums' }}>
           {timeStr}

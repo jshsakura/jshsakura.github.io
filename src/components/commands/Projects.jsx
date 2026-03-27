@@ -42,9 +42,9 @@ export default function Projects({ theme }) {
         {timeline.map((proj) => (
           <div
             key={`${proj.company}-${proj.name}`}
-            className="rounded-lg"
+            className="rounded-lg transition-colors duration-200"
             style={{
-              padding: '14px 16px',
+              padding: '12px 14px',
               backgroundColor: `${theme.fg}06`,
               border: `1px solid ${theme.border}`,
             }}
@@ -53,13 +53,13 @@ export default function Projects({ theme }) {
               {proj.name}
             </div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className="text-sm" style={{ color: theme.success }}>{proj.company}</span>
-              <span className="text-sm" style={{ color: theme.comment }}>{proj.period}</span>
+              <span className="text-xs sm:text-sm" style={{ color: theme.success }}>{proj.company}</span>
+              <span className="text-xs sm:text-sm" style={{ color: theme.comment }}>{proj.period}</span>
             </div>
-            <div className="text-sm mb-2" style={{ color: theme.fg }}>
+            <div className="text-xs sm:text-sm mb-2 leading-relaxed" style={{ color: theme.fg }}>
               {proj.description}
             </div>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1">
               {proj.tech.map((t) => (
                 <TechBadge key={t} tech={t} theme={theme} />
               ))}
