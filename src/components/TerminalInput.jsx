@@ -14,12 +14,13 @@ const charVariants = {
 function PowerlinePrompt({ theme, compact = false }) {
   const segments = compact
     ? [
-        { text: ' $ ', bg: theme.accent, fg: theme.bg },
+        { text: ' ~ ', bg: theme.accent, fg: theme.bg },
+        { text: ' zsh ', bg: theme.border, fg: theme.fg },
       ]
     : [
         { text: ' visitor ', bg: theme.accent, fg: theme.bg },
-        { text: ' devterminal ', bg: theme.prompt, fg: theme.bg },
-        { text: ' ~ ', bg: theme.border, fg: theme.fg },
+        { text: ' ~ ', bg: theme.prompt, fg: theme.bg },
+        { text: ' zsh ', bg: theme.border, fg: theme.fg },
       ]
 
   return (
