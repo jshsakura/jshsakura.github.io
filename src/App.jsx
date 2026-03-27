@@ -73,18 +73,18 @@ function App() {
 
   return (
     <div
-      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'p-3 sm:p-8 md:p-12'}`}
+      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'p-4 sm:p-8 md:p-12'}`}
       style={{ 
         backgroundColor: theme.headerBg, 
-        paddingTop: isMaximized ? 'env(safe-area-inset-top, 0px)' : 'max(24px, env(safe-area-inset-top, 0px))', 
-        paddingBottom: isMaximized ? 'env(safe-area-inset-bottom, 0px)' : 'max(24px, env(safe-area-inset-bottom, 0px))' 
+        paddingTop: isMaximized ? 'env(safe-area-inset-top, 0px)' : 'max(16px, env(safe-area-inset-top, 16px))',
+        paddingBottom: isMaximized ? 'env(safe-area-inset-bottom, 0px)' : 'max(16px, env(safe-area-inset-bottom, 16px))' 
       }}
     >
       <div
         className={`overflow-hidden overflow-x-hidden transition-all duration-300 ${
           isMaximized
             ? 'w-full h-full'
-            : 'w-full h-full sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
+            : 'w-full h-full rounded-xl sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
         } ${isMinimized ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         style={{
           margin: isMaximized ? 0 : undefined,

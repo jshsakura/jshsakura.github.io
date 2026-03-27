@@ -32,7 +32,7 @@ export default function ShortcutBar({ onCommand, theme }) {
           onClick={() => onCommand(s.cmd)}
           className="shrink-0 rounded-full cursor-pointer transition-all duration-150 hover:scale-105 active:scale-93"
           style={{
-            fontSize: '11px',
+            fontSize: '13px',
             padding: '4px 12px',
             backgroundColor: s.highlight ? `${theme.accent}20` : `${theme.fg}08`,
             color: s.highlight ? theme.accent : theme.fg,

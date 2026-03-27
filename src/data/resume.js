@@ -2,7 +2,7 @@ export const resumeData = {
   personal: {
     name: 'Seunghyeon',
     nameKo: '승현',
-    title: 'Freelance Developer',
+    title: 'Developer',
     tagline: '"훌륭한 목수는 보이지 않는 곳이라고 해서 썩은 나무를 덧대지 않는다."',
     bio: [
       `${(() => { const now = new Date(); let y = now.getFullYear() - 2014; if (now.getMonth() + 1 < 9) y--; return y; })()}년차, 여전히 무엇보다 소통을 중요시 생각하는 개발자입니다.`,
@@ -58,7 +58,7 @@ export const resumeData = {
     },
     ai: {
       name: 'With AI Tools',
-      items: ['Claude Code', 'Gemini CLI', 'Zai Coding-Plan', 'Codex', 'Ollama'],
+      items: ['Claude Code', 'Gemini CLI', 'Opencode', 'Zai Coding-Plan', 'Codex', 'Ollama'],
       color: '#f97316',
       level: 999,
     },

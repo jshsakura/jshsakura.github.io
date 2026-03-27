@@ -227,7 +227,7 @@ export default function TerminalInput({ onExecute, onNavigateHistory, onAutocomp
           onKeyDown={handleKeyDown}
           onSelect={handleSelect}
           className="absolute inset-0 w-full bg-transparent outline-none text-sm caret-transparent"
-          style={{ color: 'transparent', fontFamily: 'inherit' }}
+          style={{ color: 'transparent', fontFamily: 'inherit', fontSize: '16px' }}
           lang="en"
           inputMode="latin"
           autoCapitalize="none"
