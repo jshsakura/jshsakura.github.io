@@ -261,7 +261,7 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
           borderBottom: `1px solid ${theme.border}`,
         }}
       >
-        <div className="flex gap-2 sm:gap-2.5 window-buttons">
+        <div className="hidden sm:flex gap-2.5 window-buttons">
           <button
             className="rounded-full bg-[#ff5f57] window-btn cursor-pointer"
             onClick={() => setWindowState('closed')}
@@ -270,14 +270,14 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             <span className="window-btn-icon">✕</span>
           </button>
           <button
-            className="rounded-full bg-[#febc2e] window-btn cursor-pointer hidden sm:flex"
+            className="rounded-full bg-[#febc2e] window-btn cursor-pointer"
             onClick={() => setWindowState('minimized')}
             title="Minimize"
           >
             <span className="window-btn-icon">−</span>
           </button>
           <button
-            className="rounded-full bg-[#28c840] window-btn cursor-pointer hidden sm:flex"
+            className="rounded-full bg-[#28c840] window-btn cursor-pointer"
             onClick={() => setWindowState(windowState === 'maximized' ? 'normal' : 'maximized')}
             title={windowState === 'maximized' ? 'Restore' : 'Maximize'}
           >
@@ -312,7 +312,9 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
         />
       </div>
 
-      <ShortcutBar onCommand={handleCommand} theme={theme} />
+      <div className="hidden sm:block">
+        <ShortcutBar onCommand={handleCommand} theme={theme} />
+      </div>
 
       {showRickroll && (
         <RickrollPopup onClose={() => setShowRickroll(false)} />
