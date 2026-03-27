@@ -73,7 +73,7 @@ function App() {
 
   return (
     <div
-      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'sm:p-8 md:p-12'}`}
+      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'pb-6 sm:p-8 md:p-12'}`}
       style={{
         backgroundColor: theme.headerBg,
       }}
