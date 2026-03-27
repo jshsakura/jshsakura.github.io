@@ -73,11 +73,11 @@ function App() {
 
   return (
     <div
-      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'p-4 sm:p-8 md:p-12'}`}
-      style={{ 
-        backgroundColor: theme.headerBg, 
-        paddingTop: isMaximized ? 'env(safe-area-inset-top, 0px)' : 'max(16px, env(safe-area-inset-top, 16px))',
-        paddingBottom: isMaximized ? 'env(safe-area-inset-bottom, 0px)' : 'max(16px, env(safe-area-inset-bottom, 16px))' 
+      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'px-5 py-6 sm:p-8 md:p-12'}`}
+      style={{
+        backgroundColor: theme.headerBg,
+        paddingTop: isMaximized ? 'env(safe-area-inset-top, 0px)' : undefined,
+        paddingBottom: isMaximized ? 'env(safe-area-inset-bottom, 0px)' : undefined,
       }}
     >
       <div
