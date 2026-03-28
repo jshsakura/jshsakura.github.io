@@ -73,7 +73,7 @@ function App() {
 
   return (
     <div
-      className={`h-dvh w-screen flex items-center justify-center ${isMaximized ? '' : 'pb-6 sm:p-8 md:p-12'}`}
+      className={`h-dvh w-screen flex flex-col items-center justify-center ${isMaximized ? '' : 'sm:p-8 md:p-12'}`}
       style={{
         backgroundColor: theme.headerBg,
       }}
@@ -82,7 +82,7 @@ function App() {
         className={`overflow-hidden overflow-x-hidden transition-all duration-300 ${
           isMaximized
             ? 'w-full h-full'
-            : 'w-full h-full sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
+            : 'w-full flex-1 min-h-0 sm:max-w-6xl sm:max-h-[92vh] sm:rounded-2xl sm:terminal-glow'
         } ${isMinimized ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         style={{
           margin: isMaximized ? 0 : undefined,
@@ -104,13 +104,11 @@ function App() {
 
       {!isMaximized && (
         <div
-          className="fixed left-0 right-0 flex items-center justify-center select-none"
+          className="w-full flex-shrink-0 flex items-center justify-center select-none"
           style={{
-            bottom: '0px',
-            padding: '4px 10px',
+            padding: '6px 10px',
             color: theme.comment,
             fontSize: '10px',
-            zIndex: 50,
           }}
         >
           <span>© 2025 Husband of Rebekah — Perfectionists with deadlines!</span>
