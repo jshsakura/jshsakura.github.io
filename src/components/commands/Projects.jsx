@@ -38,28 +38,28 @@ export default function Projects({ theme }) {
         Notable Projects
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         {timeline.map((proj) => (
           <div
             key={`${proj.company}-${proj.name}`}
             className="rounded-lg transition-colors duration-200"
             style={{
-              padding: '12px 14px',
+              padding: '14px 16px',
               backgroundColor: `${theme.fg}06`,
               border: `1px solid ${theme.border}`,
             }}
           >
-            <div className="font-semibold text-sm mb-1" style={{ color: theme.accent }}>
+            <div className="font-semibold text-sm mb-1.5" style={{ color: theme.accent }}>
               {proj.name}
             </div>
-            <div className="flex flex-wrap items-center gap-2 mb-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1.5">
               <span className="text-xs sm:text-sm" style={{ color: theme.success }}>{proj.company}</span>
               <span className="text-xs sm:text-sm" style={{ color: theme.comment }}>{proj.period}</span>
             </div>
-            <div className="text-xs sm:text-sm mb-2 leading-relaxed" style={{ color: theme.fg }}>
+            <div className="text-xs sm:text-sm mb-2.5 leading-relaxed" style={{ color: theme.fg }}>
               {proj.description}
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {proj.tech.map((t) => (
                 <TechBadge key={t} tech={t} theme={theme} />
               ))}

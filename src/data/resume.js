@@ -75,7 +75,7 @@ export const resumeData = {
           name: 'Yokogawa 차세대 비즈니스 매니지먼트 솔루션 개발',
           period: '2026.03 ~ Present',
           description: 'ServiceNow App Engine Studio 기반 디지털 워크플로우 애플리케이션 개발',
-          tech: ['ServiceNow'],
+          tech: ['ServiceNow', 'App Engine'],
         },
         {
           name: '서린상사 트레이딩 시스템 개발 및 고도화',
@@ -93,7 +93,7 @@ export const resumeData = {
           name: '스마일게이트 재무포탈 유지보수',
           period: '2024.04 ~ 2024.12',
           description: '재무 포탈 시스템 운영 및 유지보수 담당',
-          tech: ['Java', 'Spring', 'Oracle'],
+          tech: ['Java', 'Spring', 'Oracle', 'PostgreSQL'],
         },
         {
           name: '스마일게이트 총무 시스템 구축',
