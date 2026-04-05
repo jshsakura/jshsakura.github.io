@@ -267,21 +267,31 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             onClick={() => setWindowState('closed')}
             title="Close"
           >
-            <span className="window-btn-icon">✕</span>
+            <svg className="window-btn-icon" viewBox="0 0 12 12" width="8" height="8">
+              <path d="M3 3l6 6M9 3l-6 6" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
           </button>
           <button
             className="rounded-full bg-[#febc2e] window-btn cursor-pointer hidden sm:flex"
             onClick={() => setWindowState('minimized')}
             title="Minimize"
           >
-            <span className="window-btn-icon">−</span>
+            <svg className="window-btn-icon" viewBox="0 0 12 12" width="8" height="8">
+              <path d="M2.5 6h7" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
           </button>
           <button
             className="rounded-full bg-[#28c840] window-btn cursor-pointer hidden sm:flex"
             onClick={() => setWindowState(windowState === 'maximized' ? 'normal' : 'maximized')}
             title={windowState === 'maximized' ? 'Restore' : 'Maximize'}
           >
-            <span className="window-btn-icon">{windowState === 'maximized' ? '⤓' : '⤢'}</span>
+            <svg className="window-btn-icon" viewBox="0 0 12 12" width="8" height="8">
+              {windowState === 'maximized' ? (
+                <path d="M3.5 8.5V5a1 1 0 011-1H8M8.5 3.5V7a1 1 0 01-1 1H4" stroke="rgba(0,0,0,0.8)" strokeWidth="1.2" strokeLinecap="round" />
+              ) : (
+                <path d="M4 4l4 4M4 4v3.5M4 4h3.5" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              )}
+            </svg>
           </button>
         </div>
         <div
