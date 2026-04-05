@@ -72,6 +72,12 @@ export const resumeData = {
       role: 'Freelance Developer',
       projects: [
         {
+          name: 'Yokogawa 차세대 비즈니스 매니지먼트 솔루션 개발',
+          period: '2026.03 ~ Present',
+          description: 'ServiceNow App Engine Studio 기반 디지털 워크플로우 애플리케이션 개발',
+          tech: ['ServiceNow'],
+        },
+        {
           name: '서린상사 트레이딩 시스템 개발 및 고도화',
           period: '2020.07 ~ 2021.12',
           description: 'WMS 시스템 고도화, LME 레피니티브 Python API 연동 및 선적입출고 관리 기능 개발',
