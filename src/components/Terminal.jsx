@@ -267,8 +267,8 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             onClick={() => setWindowState('closed')}
             title="Close"
           >
-            <svg className="window-btn-icon" viewBox="0 0 12 12" width="8" height="8">
-              <path d="M3 3l6 6M9 3l-6 6" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" />
+            <svg className="window-btn-icon" viewBox="0 0 12 12" width="10" height="10">
+              <path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="rgba(0,0,0,0.8)" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
           </button>
           <button
@@ -276,8 +276,8 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             onClick={() => setWindowState('minimized')}
             title="Minimize"
           >
-            <svg className="window-btn-icon" viewBox="0 0 12 12" width="8" height="8">
-              <path d="M2.5 6h7" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" />
+            <svg className="window-btn-icon" viewBox="0 0 12 12" width="10" height="10">
+              <path d="M3 6h6" stroke="rgba(0,0,0,0.8)" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
           </button>
           <button
@@ -285,11 +285,11 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             onClick={() => setWindowState(windowState === 'maximized' ? 'normal' : 'maximized')}
             title={windowState === 'maximized' ? 'Restore' : 'Maximize'}
           >
-            <svg className="window-btn-icon" viewBox="0 0 12 12" width="8" height="8">
+            <svg className="window-btn-icon" viewBox="0 0 12 12" width="10" height="10">
               {windowState === 'maximized' ? (
-                <path d="M3.5 8.5V5a1 1 0 011-1H8M8.5 3.5V7a1 1 0 01-1 1H4" stroke="rgba(0,0,0,0.8)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M3 8V5.5a1 1 0 011-1H7M9 4V6.5a1 1 0 01-1 1H5" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" />
               ) : (
-                <path d="M4 4l4 4M4 4v3.5M4 4h3.5" stroke="rgba(0,0,0,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.5 3.5l5 5M3.5 3.5v4M3.5 3.5h4" stroke="rgba(0,0,0,0.8)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               )}
             </svg>
           </button>
