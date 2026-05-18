@@ -10,7 +10,7 @@ function useWeather() {
       if (cached && cached.date === new Date().toISOString().slice(0, 10)) {
         return cached.value
       }
-    } catch {}
+    } catch { /* ignore */ }
     return null
   })
 
@@ -53,7 +53,7 @@ function useVisitorInfo() {
       if (cached && cached.date === new Date().toISOString().slice(0, 10)) {
         return cached.value
       }
-    } catch {}
+    } catch { /* ignore */ }
     return null
   })
 
@@ -93,7 +93,6 @@ function getClientInfo() {
   else if (ua.includes('Safari/') && !ua.includes('Chrome')) browser = 'Safari ' + ua.match(/Version\/([\d.]+)/)?.[1]
 
   const cpu = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores` : 'Unknown'
-  const memory = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : null
 
   let gpu = 'Unknown'
   try {
@@ -103,9 +102,9 @@ function getClientInfo() {
       const ext = gl.getExtension('WEBGL_debug_renderer_info')
       if (ext) gpu = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
     }
-  } catch {}
+  } catch { /* ignore */ }
 
-  return { os, browser, cpu, gpu, memory }
+  return { os, browser, cpu, gpu }
 }
 
 const ASCII_ART = [
@@ -121,7 +120,7 @@ export default function Neofetch({ theme, themeName }) {
   const currentTheme = themes[themeName] || themes.default
   const weather = useWeather()
   const visitor = useVisitorInfo()
-  const { os, browser, cpu, gpu, memory } = getClientInfo()
+  const { os, browser, cpu, gpu } = getClientInfo()
 
   const info = [
     { label: 'visitor', value: visitor.ip ? `unknown@${visitor.ip}` : 'unknown@connecting...', color: theme.prompt },
