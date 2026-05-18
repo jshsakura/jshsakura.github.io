@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
-import { resumeData, commands as commandList, themes } from '../data/resume'
+import { resumeData, commands as commandList } from '../data/resume'
 
 const VISIBLE_COMMANDS = commandList.map(c => c.cmd.split(' ')[0])
 const HIDDEN_COMMANDS = ['ls', 'll', 'la', 'cd', 'cat', 'pwd', 'rm', 'sudo', 'exit', 'ping', 'cowsay', 'vim', 'nano', 'vi', 'whois', 'man', 'echo', 'mkdir', 'touch', 'mv', 'cp', 'ssh', 'wget', 'curl', 'matrix', 'hack', 'fortune', 'sl', 'top', 'htop', 'git', 'docker', 'python', 'node', 'brew', 'apt', 'apt-get', 'uname', 'hostname', 'ifconfig', 'traceroute', 'who', 'w', 'cal', 'uptime', 'free', 'yes', 'grep', 'awk', 'sed', 'chmod', 'chown', 'nmap', 'telnet', 'make', 'hello', 'hi', '42', 'flip', 'lolcat', 'screenfetch', 'figlet', 'id', 'env', 'which', 'type', 'file', 'head', 'tail', 'less', 'more', 'df', 'du', 'ps', 'kill', 'jobs', 'bg', 'fg', 'export', 'alias', 'source', 'bash', 'sh', 'zsh', 'cls', 'claude', 'opencode', 'gemini']
@@ -54,6 +54,10 @@ export default function useTerminal({ theme, setThemeName, themes }) {
 
       case 'projects':
         addOutput('output', { type: 'projects' })
+        break
+
+      case 'portfolio':
+        addOutput('output', { type: 'portfolio' })
         break
 
       case 'contact':
@@ -155,7 +159,7 @@ export default function useTerminal({ theme, setThemeName, themes }) {
         break
 
       case 'ls':
-        addOutput('system', 'about/  skills/  career/  projects/  contact/  secret.txt')
+        addOutput('system', 'about/  skills/  career/  projects/  portfolio/  contact/  secret.txt')
         break
 
       case 'll':
@@ -165,13 +169,14 @@ export default function useTerminal({ theme, setThemeName, themes }) {
           'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 skills/',
           'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 career/',
           'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 projects/',
+          'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 portfolio/',
           'drwxr-xr-x  2 visitor  staff   64 Jan  1 00:00 contact/',
           '-rw-r--r--  1 visitor  staff  256 Jan  1 00:00 secret.txt',
         ].join('\n'))
         break
 
       case 'la':
-        addOutput('system', '.  ..  .bashrc  .profile  about/  skills/  career/  projects/  contact/  secret.txt')
+        addOutput('system', '.  ..  .bashrc  .profile  about/  skills/  career/  projects/  portfolio/  contact/  secret.txt')
         break
 
       case 'cd':
@@ -765,6 +770,7 @@ export default function useTerminal({ theme, setThemeName, themes }) {
           '4.0K    ./skills',
           '4.0K    ./career',
           '4.0K    ./projects',
+          '4.0K    ./portfolio',
           '4.0K    ./contact',
           '256B    ./secret.txt',
           '20K     .',
@@ -892,7 +898,7 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       default:
         addOutput('error', `command not found: ${cmd}. Type 'help' for available commands.`)
     }
-  }, [addOutput, theme, setThemeName, themes, historyList])
+  }, [addOutput, theme, setThemeName, themes, historyList, triggerRickroll])
 
   const navigateHistory = useCallback((direction) => {
     if (historyList.length === 0) return null
@@ -944,7 +950,7 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       }
       
       // File autocomplete (e.g. "cat sec" → "cat secret.txt")
-      const visibleFiles = ['about/', 'skills/', 'career/', 'projects/', 'contact/', 'secret.txt']
+      const visibleFiles = ['about/', 'skills/', 'career/', 'projects/', 'portfolio/', 'contact/', 'secret.txt']
       const hiddenFiles = ['.bashrc', '.profile']
       const files = arg.startsWith('.') ? [...hiddenFiles, ...visibleFiles] : visibleFiles
       const fileMatches = files.filter(f => f.startsWith(arg))
@@ -976,7 +982,7 @@ export default function useTerminal({ theme, setThemeName, themes }) {
       return null
     }
     return null
-  }, [addOutput])
+  }, [addOutput, themes])
 
   return {
     outputs,

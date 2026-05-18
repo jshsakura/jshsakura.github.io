@@ -6,6 +6,7 @@ import Whoami from './commands/Whoami'
 import Skills from './commands/Skills'
 import Career from './commands/Career'
 import Projects from './commands/Projects'
+import Portfolio from './commands/Portfolio'
 import Contact from './commands/Contact'
 import MatrixRain from './commands/MatrixRain'
 import HackSequence from './commands/HackSequence'
@@ -89,6 +90,7 @@ function CommandContent({ data, theme }) {
     case 'skills': return <Skills theme={theme} />
     case 'career': return <Career theme={theme} />
     case 'projects': return <Projects theme={theme} />
+    case 'portfolio': return <Portfolio theme={theme} />
     case 'contact': return <Contact theme={theme} />
     case 'theme-list':
       return (

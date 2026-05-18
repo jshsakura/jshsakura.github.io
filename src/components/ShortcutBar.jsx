@@ -4,6 +4,7 @@ const shortcuts = [
   { cmd: 'skills', label: 'skills' },
   { cmd: 'career', label: 'career' },
   { cmd: 'projects', label: 'projects' },
+  { cmd: 'portfolio', label: 'portfolio' },
   { cmd: 'contact', label: 'contact' },
   { cmd: 'neofetch', label: 'neofetch' },
   { cmd: 'theme', label: 'theme' },

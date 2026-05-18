@@ -463,6 +463,7 @@ export const commands = [
   { cmd: 'skills', desc: 'Tech stack & expertise' },
   { cmd: 'career', desc: 'Work experience timeline' },
   { cmd: 'projects', desc: 'Notable projects' },
+  { cmd: 'portfolio', desc: 'Open-source side projects from GitHub' },
   { cmd: 'contact', desc: 'How to reach me' },
   { cmd: 'neofetch', desc: 'System info (developer style)' },
   { cmd: 'theme [name]', desc: 'Change terminal theme (type "theme" to see all 19 themes)' },
