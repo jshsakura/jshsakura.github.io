@@ -272,7 +272,7 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
             </svg>
           </button>
           <button
-            className="rounded-full bg-[#febc2e] window-btn cursor-pointer hidden sm:flex"
+            className="rounded-full bg-[#febc2e] window-btn cursor-pointer"
             onClick={() => setWindowState('minimized')}
             title="Minimize"
           >
