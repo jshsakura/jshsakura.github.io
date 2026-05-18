@@ -88,25 +88,27 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Window control buttons */
-.window-btn {
-  position: relative;
-  border: none;
-  padding: 0;
-  width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* Window control buttons — placed in components layer so Tailwind utilities (e.g. `hidden`) can override */
+@layer components {
+  .window-btn {
+    position: relative;
+    border: none;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.window-btn-icon {
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
+  .window-btn-icon {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
 
-.window-buttons:hover .window-btn-icon {
-  opacity: 1;
+  .window-buttons:hover .window-btn-icon {
+    opacity: 1;
+  }
 }
 
 /* Mobile touch feedback */
@@ -118,9 +120,11 @@ body {
   }
 
   /* Larger tap targets for window buttons */
-  .window-btn {
-    width: 18px;
-    height: 18px;
+  @layer components {
+    .window-btn {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   /* Always show window button icons on touch devices */
