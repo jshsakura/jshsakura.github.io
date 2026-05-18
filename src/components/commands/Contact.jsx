@@ -58,7 +58,7 @@ function ContactInfo({ theme }) {
   ]
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2" style={{ maxWidth: '520px' }}>
+    <div className="grid gap-4 sm:grid-cols-2" style={{ maxWidth: '520px' }}>
       {links.map((link) => (
         <div
           key={link.label}
@@ -185,8 +185,8 @@ function ContactForm({ theme }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 mt-4" style={{ maxWidth: '520px' }} onClick={(e) => e.stopPropagation()}>
-      <div className="text-sm font-semibold" style={{ color: theme.accent, marginBottom: '10px' }}>
+    <form onSubmit={handleSubmit} className="space-y-4 mt-4" style={{ maxWidth: '520px' }} onClick={(e) => e.stopPropagation()}>
+      <div className="text-sm font-semibold" style={{ color: theme.accent, marginBottom: '14px' }}>
         Send me a message:
       </div>
 
@@ -202,7 +202,7 @@ function ContactForm({ theme }) {
         </div>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <input
           ref={nameRef}
           type="text"
@@ -230,7 +230,7 @@ function ContactForm({ theme }) {
         value={form.message}
         onChange={(e) => setForm(prev => ({ ...prev, message: e.target.value }))}
         className="w-full text-sm rounded transition-colors resize-none"
-        style={{ ...inputStyle, padding: '10px 12px', minHeight: '100px' }}
+        style={{ ...inputStyle, padding: '10px 12px', minHeight: '100px', marginTop: '14px', marginBottom: '14px' }}
         onFocus={(e) => { e.target.style.borderColor = focusStyle }}
         onBlur={(e) => { e.target.style.borderColor = theme.border }}
         placeholder="What would you like to discuss?"
@@ -255,7 +255,7 @@ function ContactForm({ theme }) {
 
 export default function Contact({ theme }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <div className="text-base font-semibold" style={{ color: theme.accent }}>
         Get in Touch
       </div>
