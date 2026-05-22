@@ -2,9 +2,19 @@ import { useState, useEffect } from 'react'
 import { getTechColor } from '../../data/techColors'
 
 const GITHUB_USER = 'jshsakura'
-const CACHE_KEY = 'portfolio_repos_v1'
+const CACHE_KEY = 'portfolio_repos_v3'
 const CACHE_TTL_MS = 60 * 60 * 1000
-const MAX_REPOS = 8
+const MAX_REPOS = 12
+
+function timeAgo(iso) {
+  if (!iso) return null
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
+  if (days < 1) return 'today'
+  if (days < 30) return `${days}d ago`
+  const months = Math.floor(days / 30)
+  if (months < 12) return `${months}mo ago`
+  return `${Math.floor(months / 12)}y ago`
+}
 
 function TechBadge({ tech, theme }) {
   const color = getTechColor(tech)
@@ -26,6 +36,14 @@ function StarIcon({ color }) {
   return (
     <svg viewBox="0 0 16 16" width="12" height="12" fill={color}>
       <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z" />
+    </svg>
+  )
+}
+
+function ForkIcon({ color }) {
+  return (
+    <svg viewBox="0 0 16 16" width="12" height="12" fill={color}>
+      <path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
     </svg>
   )
 }
@@ -60,7 +78,7 @@ function writeCache(repos) {
 
 function pickRepos(raw) {
   return raw
-    .filter(r => !r.fork && r.description && r.name !== GITHUB_USER)
+    .filter(r => r.description && r.name !== GITHUB_USER && (!r.fork || r.stargazers_count > 0))
     .sort((a, b) => {
       if (b.stargazers_count !== a.stargazers_count) return b.stargazers_count - a.stargazers_count
       return new Date(b.pushed_at) - new Date(a.pushed_at)
@@ -72,6 +90,8 @@ function pickRepos(raw) {
       url: r.html_url,
       homepage: r.homepage && /^https?:\/\//.test(r.homepage) ? r.homepage : null,
       stars: r.stargazers_count,
+      forks: r.forks_count,
+      updatedAt: r.pushed_at,
       language: r.language,
       topics: Array.isArray(r.topics) ? r.topics : [],
     }))
@@ -154,12 +174,20 @@ export default function Portfolio({ theme }) {
                   >
                     {repo.name}
                   </a>
-                  {repo.stars > 0 && (
-                    <span className="flex items-center gap-1 text-xs shrink-0" style={{ color: theme.comment }}>
-                      <StarIcon color={theme.comment} />
-                      {repo.stars}
-                    </span>
-                  )}
+                  <span className="flex items-center gap-2 text-xs shrink-0" style={{ color: theme.comment }}>
+                    {repo.stars > 0 && (
+                      <span className="flex items-center gap-1">
+                        <StarIcon color={theme.comment} />
+                        {repo.stars}
+                      </span>
+                    )}
+                    {repo.forks > 0 && (
+                      <span className="flex items-center gap-1">
+                        <ForkIcon color={theme.comment} />
+                        {repo.forks}
+                      </span>
+                    )}
+                  </span>
                 </div>
 
                 <div className="text-xs sm:text-sm mb-2.5 leading-relaxed flex-1" style={{ color: theme.fg }}>
@@ -172,7 +200,13 @@ export default function Portfolio({ theme }) {
                   </div>
                 )}
 
-                <div className="flex flex-wrap gap-2 mt-auto">
+                {repo.updatedAt && (
+                  <div className="text-xs mb-2 mt-auto" style={{ color: theme.comment }}>
+                    Updated {timeAgo(repo.updatedAt)}
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-2">
                   <a
                     href={repo.url}
                     target="_blank"

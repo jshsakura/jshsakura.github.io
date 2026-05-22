@@ -17,8 +17,7 @@ export const resumeData = {
       '개인적으로는 게임·UMPC 관련 오픈소스 프로젝트에 관심이 많아',
       '몇 가지를 직접 개발하고 운영하고 있습니다.',
       '',
-      '최근에는 Claude Code, Gemini CLI 등 AI 도구를 적극 활용하고 있으며,',
-      '현재 포트폴리오 역시 AI와 함께 작성되었습니다.',
+      'Claude Code, Codex, Gemini, GLM 등 AI 도구를 꾸준히 활용하고 있습니다.',
     ],
     github: 'https://github.com/jshsakura',
     email: 'support@opencourse.kr',
@@ -58,7 +57,7 @@ export const resumeData = {
     },
     ai: {
       name: 'With AI Tools',
-      items: ['Claude Code', 'Gemini CLI', 'Opencode', 'Zai Coding-Plan', 'Codex', 'Ollama'],
+      items: ['Claude Code', 'Codex', 'Gemini', 'GLM'],
       color: '#f97316',
       level: 999,
     },
