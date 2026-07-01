@@ -12,31 +12,31 @@ export const resumeData = {
     frontend: {
       name: 'Frontend',
       items: ['React', 'Next.js', 'Nexacro', 'WebSquare'],
-      color: '#1e66f5',
+      color: '#6366f1',
       icon: '🎨',
     },
     backend: {
       name: 'Backend',
       items: ['Java Spring', 'SpringBoot', 'ASP.NET', 'Node.js', 'Python'],
-      color: '#40a02b',
+      color: '#22c55e',
       icon: '⚙️',
     },
     mobile: {
       name: 'Mobile',
       items: ['Android (Java)', 'iOS (Swift)'],
-      color: '#179299',
+      color: '#06b6d4',
       icon: '📱',
     },
     database: {
       name: 'Database',
       items: ['Oracle', 'MySQL', 'PostgreSQL'],
-      color: '#d20f39',
+      color: '#f59e0b',
       icon: '🗄️',
     },
     etc: {
       name: 'Others',
       items: ['API Gateway', 'SSO', 'REST API', 'Git'],
-      color: '#8839ef',
+      color: '#8b5cf6',
       icon: '🔧',
     },
   },
@@ -113,38 +113,44 @@ export const resumeData = {
   totalExperience: '11+ years',
 };
 
-// Catppuccin Latte colors for rooms
+/**
+ * 젤다 스타일 방 설정 (섬 중심 배치)
+ */
 export const roomsConfig = [
   {
     id: 'welcome',
     name: 'Welcome',
     position: [0, 0],
-    color: '#ccd0da', // surface0
-    size: 6,
+    color: '#C49A6C',
+    accentColor: '#FFD93D',
+    size: 5,
     description: 'Start here!',
   },
   {
     id: 'skills',
     name: 'Skills',
-    position: [10, 0],
-    color: '#bcc0cc', // surface1
-    size: 8,
+    position: [10, 6],
+    color: '#C49A6C',
+    accentColor: '#69F0AE',
+    size: 6,
     description: 'My tech stack',
   },
   {
     id: 'experience',
     name: 'Experience',
-    position: [0, -12],
-    color: '#acb0be', // surface2
-    size: 8,
+    position: [-10, 6],
+    color: '#C49A6C',
+    accentColor: '#FFD93D',
+    size: 6,
     description: 'Work history',
   },
   {
     id: 'contact',
     name: 'Contact',
-    position: [10, -12],
-    color: '#9ca0b0', // overlay0
-    size: 6,
+    position: [0, -12],
+    color: '#C49A6C',
+    accentColor: '#A8D8FF',
+    size: 5,
     description: 'Get in touch',
   },
 ];

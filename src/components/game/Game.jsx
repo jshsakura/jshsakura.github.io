@@ -1,11 +1,18 @@
 import { useRef, useState } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
+import { Sky } from '@react-three/drei'
+import * as THREE from 'three'
+
 import Player from './Player'
 import World from './World'
 import ClickIndicator from './ClickIndicator'
-import * as THREE from 'three'
+import { PLAYER, CAMERA, WORLD, LIGHTS } from '../../constants/config'
+import { environmentColors } from '../../constants/colors'
 
+/**
+ * 젤다 꿈꾸는 섬 스타일 게임
+ */
 export default function Game({ setCurrentRoom, setPlayerPosition }) {
   const { camera, gl } = useThree()
   const playerRef = useRef()
@@ -35,12 +42,12 @@ export default function Game({ setCurrentRoom, setPlayerPosition }) {
 
       cameraTarget.current.lerp(
         new THREE.Vector3(playerPos.x, playerPos.y, playerPos.z),
-        0.05
+        CAMERA.LERP_FACTOR
       )
 
-      camera.position.x = cameraTarget.current.x + 20
-      camera.position.y = 20
-      camera.position.z = cameraTarget.current.z + 20
+      camera.position.x = cameraTarget.current.x + CAMERA.OFFSET_X
+      camera.position.y = CAMERA.OFFSET_Y
+      camera.position.z = cameraTarget.current.z + CAMERA.OFFSET_Z
       camera.lookAt(cameraTarget.current)
 
       setPlayerPosition([playerPos.x, playerPos.y, playerPos.z])
@@ -49,42 +56,85 @@ export default function Game({ setCurrentRoom, setPlayerPosition }) {
 
   return (
     <>
-      <ambientLight intensity={0.6} />
+      {/* 밝고 맑은 하늘 */}
+      <Sky
+        distance={450000}
+        sunPosition={[80, 60, 50]}
+        inclination={0.5}
+        azimuth={0.25}
+        turbidity={4}
+        rayleigh={0.2}
+        mieCoefficient={0.002}
+        mieDirectionalG={0.8}
+      />
+
+      {/* 하늘색 배경 (Sky 보완) */}
+      <color attach="background" args={[environmentColors.skyTop]} />
+
+      {/* === 조명 - 밝고 따뜻한 햇살 === */}
+
+      {/* 환경광 - 밝고 따뜻하게 */}
+      <ambientLight
+        intensity={LIGHTS.AMBIENT_INTENSITY}
+        color={LIGHTS.AMBIENT_COLOR}
+      />
+
+      {/* 주광 - 태양 */}
       <directionalLight
-        position={[10, 20, 10]}
-        intensity={1}
+        position={[30, 40, 20]}
+        intensity={LIGHTS.DIRECTIONAL_INTENSITY}
+        color={LIGHTS.DIRECTIONAL_COLOR}
         castShadow
-        shadow-mapSize={[2048, 2048]}
-        shadow-camera-far={50}
-        shadow-camera-left={-30}
-        shadow-camera-right={30}
-        shadow-camera-top={30}
-        shadow-camera-bottom={-30}
+        shadow-mapSize={[LIGHTS.SHADOW_MAP_SIZE, LIGHTS.SHADOW_MAP_SIZE]}
+        shadow-camera-far={LIGHTS.SHADOW_CAMERA_FAR}
+        shadow-camera-left={-LIGHTS.SHADOW_CAMERA_BOUNDS}
+        shadow-camera-right={LIGHTS.SHADOW_CAMERA_BOUNDS}
+        shadow-camera-top={LIGHTS.SHADOW_CAMERA_BOUNDS}
+        shadow-camera-bottom={-LIGHTS.SHADOW_CAMERA_BOUNDS}
       />
+
+      {/* 림 라이트 - 윤곽 강조 */}
+      <directionalLight
+        position={[-25, 15, -25]}
+        intensity={0.3}
+        color="#FFE4B5"
+      />
+
+      {/* 반구광 - 하늘/땅 반사 */}
       <hemisphereLight
-        skyColor="#87ceeb"
-        groundColor="#f0e68c"
-        intensity={0.4}
+        skyColor={LIGHTS.HEMISPHERE_SKY}
+        groundColor={LIGHTS.HEMISPHERE_GROUND}
+        intensity={LIGHTS.HEMISPHERE_INTENSITY}
       />
 
-      <fog attach="fog" args={['#e0f7fa', 30, 80]} />
+      {/* 포인트 라이트 - 중앙 따뜻한 빛 */}
+      <pointLight
+        position={[0, 10, 0]}
+        intensity={0.2}
+        color="#FFD93D"
+        distance={40}
+      />
 
-      {/* Click detection plane */}
+      {/* 옅은 안개 (하늘색) */}
+      <fog attach="fog" args={[environmentColors.fog, WORLD.FOG_NEAR, WORLD.FOG_FAR]} />
+
+      {/* 클릭 감지 평면 */}
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[5, 0, -6]}
+        position={[0, 0, 0]}
         onClick={handleClick}
-        visible={false}
       >
-        <planeGeometry args={[100, 100]} />
-        <meshBasicMaterial transparent opacity={0} />
+        <planeGeometry args={[WORLD.GROUND_SIZE, WORLD.GROUND_SIZE]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      <Physics gravity={[0, -20, 0]}>
+      {/* 물리 월드 */}
+      <Physics gravity={[0, PLAYER.GRAVITY, 0]}>
         <Player ref={playerRef} targetPosition={targetPosition} />
         <World setCurrentRoom={setCurrentRoom} />
       </Physics>
 
+      {/* 클릭 인디케이터 */}
       {targetPosition && <ClickIndicator position={targetPosition} />}
     </>
   )

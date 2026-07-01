@@ -1,0 +1,87 @@
+/**
+ * 게임 설정 상수 (젤다 꿈꾸는 섬 스타일)
+ */
+
+// 플레이어 설정
+export const PLAYER = {
+  // 이동
+  MOVE_SPEED: 5,
+  STOP_DISTANCE: 0.5,
+  LINEAR_DAMPING: 4,
+  MASS: 1,
+
+  // 물리
+  GRAVITY: -20,
+  COLLIDER_HEIGHT: 0.3,
+  COLLIDER_RADIUS: 0.3,
+
+  // 애니메이션
+  BOUNCE_SPEED: 10,
+  LEG_SWING_SPEED: 2,
+  LEG_SWING_AMOUNT: 0.4,
+  ARM_SWING_SPEED: 2,
+  ARM_SWING_AMOUNT: 0.3,
+  HAIR_SWING_SPEED: 8,
+  HAIR_SWING_AMOUNT: 0.08,
+  HAIR_FRONT_SWING_AMOUNT: 0.06,
+  HAIR_DECAY: 0.95,
+
+  // 초기 위치
+  INITIAL_POSITION: [0, 2, 0],
+}
+
+// 카메라 설정
+export const CAMERA = {
+  ZOOM: 45,
+  OFFSET_X: 18,
+  OFFSET_Y: 18,
+  OFFSET_Z: 18,
+  LERP_FACTOR: 0.05,
+  NEAR: 0.1,
+  FAR: 1000,
+}
+
+// 월드 설정 (떠있는 섬)
+export const WORLD = {
+  // 섬 크기
+  ISLAND_RADIUS: 25,
+  ISLAND_HEIGHT: 8,
+  PLAY_AREA_SIZE: 45,
+
+  // 지형
+  CLIFF_HEIGHT: 1.5,
+  HILL_MAX_HEIGHT: 2,
+
+  // 기존 호환용
+  GROUND_SIZE: 50,
+  OUTER_GROUND_SIZE: 60,
+
+  // 경로
+  PATH_WIDTH: 1.8,
+
+  // 안개 (옅게)
+  FOG_NEAR: 60,
+  FOG_FAR: 120,
+}
+
+// 라이트 설정 (밝고 따뜻하게)
+export const LIGHTS = {
+  AMBIENT_INTENSITY: 0.6,
+  AMBIENT_COLOR: '#FFF8E0',
+  DIRECTIONAL_INTENSITY: 1.2,
+  DIRECTIONAL_COLOR: '#FFF5D4',
+  HEMISPHERE_INTENSITY: 0.5,
+  HEMISPHERE_SKY: '#87CEEB',
+  HEMISPHERE_GROUND: '#7EC850',
+  SHADOW_MAP_SIZE: 2048,
+  SHADOW_CAMERA_FAR: 60,
+  SHADOW_CAMERA_BOUNDS: 35,
+}
+
+// 방 설정
+export const ROOM = {
+  TRIGGER_HEIGHT: 2,
+  GLOW_SPEED: 3,
+  GLOW_BASE_OPACITY: 0.3,
+  GLOW_VARIANCE: 0.1,
+}
