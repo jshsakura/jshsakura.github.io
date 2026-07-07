@@ -18,7 +18,7 @@ function ShortcutBar({ onCommand, theme }) {
   const nextLang = lang === 'ko' ? 'en' : 'ko'
   const chips = [
     ...shortcuts,
-    { cmd: `lang ${nextLang}`, label: `🌐 ${nextLang.toUpperCase()}`, highlight: true },
+    { cmd: `lang ${nextLang}`, label: `🌐 ${nextLang.toUpperCase()}` },
   ]
 
   return (
