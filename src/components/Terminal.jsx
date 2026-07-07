@@ -19,6 +19,46 @@ function useClock() {
   return now
 }
 
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3a13.5 13.5 0 010 18" />
+      <path d="M12 3a13.5 13.5 0 000 18" />
+    </svg>
+  )
+}
+
+function HeaderLangToggle({ theme, onCommand }) {
+  const { lang } = useLanguage()
+  const nextLang = lang === 'ko' ? 'en' : 'ko'
+
+  return (
+    <button
+      type="button"
+      title={nextLang === 'en' ? 'Switch to English' : '한국어로 전환'}
+      aria-label="Toggle language"
+      onClick={() => onCommand(`lang ${nextLang}`)}
+      className="shrink-0 flex items-center gap-1 cursor-pointer transition-colors duration-150"
+      style={{
+        color: theme.comment,
+        backgroundColor: 'transparent',
+        border: 'none',
+        padding: '2px 4px',
+        fontSize: '10px',
+        fontFamily: 'inherit',
+        letterSpacing: '0.5px',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = theme.accent }}
+      onMouseLeave={(e) => { e.currentTarget.style.color = theme.comment }}
+    >
+      <GlobeIcon />
+      {nextLang.toUpperCase()}
+    </button>
+  )
+}
+
 function HeaderClock({ theme }) {
   const now = useClock()
   const timeStr = useMemo(() => {
@@ -125,6 +165,7 @@ export default function Terminal({ themeName, setThemeName, windowState, setWind
           <span className="hidden sm:inline">visitor@devterminal:~</span>
           <span className="sm:hidden">devterminal</span>
         </div>
+        <HeaderLangToggle theme={theme} onCommand={handleCommand} />
         <HeaderClock theme={theme} />
       </div>
 
