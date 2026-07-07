@@ -1,10 +1,15 @@
 import { commands } from '../../data/resume'
+import { useLanguage } from '../../i18n/useLanguage'
+import { uiStrings } from '../../i18n/strings'
 
 export default function Help({ theme }) {
+  const { lang } = useLanguage()
+  const strings = uiStrings[lang].help
+
   return (
     <div className="space-y-1.5">
       <div style={{ color: theme.accent }} className="mb-3 text-base font-semibold">
-        Available Commands:
+        {strings.title}
       </div>
       <div className="grid gap-1">
         {commands.map((c) => (
@@ -15,12 +20,12 @@ export default function Help({ theme }) {
             >
               {c.cmd}
             </span>
-            <span style={{ color: theme.comment }}>{c.desc}</span>
+            <span style={{ color: theme.comment }}>{c.desc[lang]}</span>
           </div>
         ))}
       </div>
       <div className="mt-4 text-sm" style={{ color: theme.comment }}>
-        Tip: Use Tab for autocomplete, Arrow keys for history, Ctrl+L to clear
+        {strings.tip}
       </div>
     </div>
   )

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { resumeData } from '../../data/resume'
+import { useLanguage } from '../../i18n/useLanguage'
+import { uiStrings } from '../../i18n/strings'
 
 function SkillBar({ name, level, color, items, theme, delay }) {
   const [width, setWidth] = useState(0)
@@ -61,12 +63,13 @@ function SkillBar({ name, level, color, items, theme, delay }) {
 }
 
 export default function Skills({ theme }) {
+  const { lang } = useLanguage()
   const skills = Object.values(resumeData.skills)
 
   return (
     <div className="space-y-2">
       <div className="text-base font-semibold mb-4" style={{ color: theme.accent }}>
-        Tech Stack & Expertise
+        {uiStrings[lang].skills.title}
       </div>
       {skills.map((skill, i) => (
         <SkillBar

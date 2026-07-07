@@ -1,17 +1,18 @@
+import { memo } from 'react'
+
 const shortcuts = [
   { cmd: 'help', label: 'help', highlight: true },
   { cmd: 'whoami', label: 'whoami' },
   { cmd: 'skills', label: 'skills' },
   { cmd: 'career', label: 'career' },
   { cmd: 'projects', label: 'projects' },
-  { cmd: 'portfolio', label: 'portfolio' },
   { cmd: 'contact', label: 'contact' },
   { cmd: 'neofetch', label: 'neofetch' },
   { cmd: 'theme', label: 'theme' },
   { cmd: 'clear', label: 'clear' },
 ]
 
-export default function ShortcutBar({ onCommand, theme }) {
+function ShortcutBar({ onCommand, theme }) {
   return (
     <div
       className="shrink-0 flex items-center gap-1.5 overflow-x-auto"
@@ -57,3 +58,5 @@ export default function ShortcutBar({ onCommand, theme }) {
     </div>
   )
 }
+
+export default memo(ShortcutBar)

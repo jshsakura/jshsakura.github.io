@@ -1,17 +1,20 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, memo, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Help from './commands/Help'
 import Neofetch from './commands/Neofetch'
 import Whoami from './commands/Whoami'
 import Skills from './commands/Skills'
 import Career from './commands/Career'
-import Projects from './commands/Projects'
 import Portfolio from './commands/Portfolio'
 import Contact from './commands/Contact'
-import MatrixRain from './commands/MatrixRain'
-import HackSequence from './commands/HackSequence'
 import Fortune from './commands/Fortune'
+import Lang from './commands/Lang'
 import { themes as themeMap } from '../data/resume'
+
+const MatrixRain = lazy(() => import('./commands/MatrixRain'))
+const HackSequence = lazy(() => import('./commands/HackSequence'))
+const SudoRm = lazy(() => import('./commands/EasterEggs').then(m => ({ default: m.SudoRm })))
+const EasterProfile = lazy(() => import('./commands/EasterEggs').then(m => ({ default: m.EasterProfile })))
 
 function PowerlinePromptStatic({ theme }) {
   const segments = [
@@ -82,16 +85,16 @@ function TypedText({ text, color, speed = 18 }) {
   )
 }
 
-function CommandContent({ data, theme }) {
+function CommandContent({ data, theme, onCommand }) {
   switch (data.type) {
     case 'help': return <Help theme={theme} />
-    case 'neofetch': return <Neofetch theme={theme} themeName={data.themeName} />
+    case 'neofetch': return <Neofetch theme={theme} themeName={data.themeName} onCommand={onCommand} />
     case 'whoami': return <Whoami theme={theme} />
     case 'skills': return <Skills theme={theme} />
     case 'career': return <Career theme={theme} />
-    case 'projects': return <Projects theme={theme} />
     case 'portfolio': return <Portfolio theme={theme} />
     case 'contact': return <Contact theme={theme} />
+    case 'lang': return <Lang theme={theme} />
     case 'theme-list':
       return (
         <div className="space-y-1.5">
@@ -99,7 +102,25 @@ function CommandContent({ data, theme }) {
             Available Themes:
           </div>
           {Object.entries(themeMap).map(([key, t]) => (
-            <div key={key} className="flex items-center gap-3 text-sm whitespace-nowrap">
+            <div
+              key={key}
+              role="button"
+              tabIndex={0}
+              className="flex items-center gap-3 text-sm whitespace-nowrap cursor-pointer rounded transition-colors duration-100 theme-list-item"
+              style={{ padding: '2px 6px', margin: '0 -6px' }}
+              onClick={(e) => {
+                e.stopPropagation()
+                onCommand?.(`theme ${key}`)
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onCommand?.(`theme ${key}`)
+                }
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = `${theme.fg}10` }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
+            >
               <span
                 className="w-3.5 h-3.5 rounded-sm inline-block shrink-0"
                 style={{
@@ -119,7 +140,7 @@ function CommandContent({ data, theme }) {
             </div>
           ))}
           <div className="mt-3 text-sm" style={{ color: theme.comment }}>
-            Usage: theme [name]
+            Usage: theme [name] — or click a theme above
           </div>
         </div>
       )
@@ -141,17 +162,33 @@ function CommandContent({ data, theme }) {
         </div>
       )
     case 'matrix':
-      return <MatrixRain theme={theme} />
+      return (
+        <Suspense fallback={null}>
+          <MatrixRain theme={theme} />
+        </Suspense>
+      )
     case 'hack':
-      return <HackSequence theme={theme} />
+      return (
+        <Suspense fallback={null}>
+          <HackSequence theme={theme} />
+        </Suspense>
+      )
     case 'fortune':
       return <Fortune theme={theme} />
     case 'lolcat':
       return <LolcatText text={data.text} />
     case 'easter-sudo-rm':
-      return <SudoRm theme={theme} />
+      return (
+        <Suspense fallback={null}>
+          <SudoRm theme={theme} />
+        </Suspense>
+      )
     case 'easter-profile':
-      return <EasterProfile theme={theme} />
+      return (
+        <Suspense fallback={null}>
+          <EasterProfile theme={theme} />
+        </Suspense>
+      )
     default:
       return null
   }
@@ -168,80 +205,38 @@ function LolcatText({ text }) {
   )
 }
 
-function EasterProfile({ theme }) {
-  const [stage, setStage] = useState(0)
-  
-  useEffect(() => {
-    const timers = [
-      setTimeout(() => setStage(1), 800),
-      setTimeout(() => setStage(2), 1600),
-      setTimeout(() => setStage(3), 2400),
-      setTimeout(() => setStage(4), 3200),
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
-
-  const messages = [
-    { text: 'cat: reading secret.txt ...', color: theme.fg },
-    { text: 'Decrypting contents...', color: theme.comment },
-    { text: 'Verifying access level...', color: theme.comment },
-    { text: 'Access granted. Loading profile...', color: theme.success },
-  ]
-
+const OutputEntry = memo(function OutputEntry({ entry, theme, onCommand }) {
   return (
-    <div className="space-y-2 mt-2">
-      {messages.slice(0, stage).map((msg, i) => (
-        <div key={i} className="text-sm" style={{ color: msg.color }}>
-          {msg.text}
+    <div className="output-line">
+      {entry.type === 'command' && (
+        <div className="text-sm flex items-center flex-wrap">
+          <PowerlinePromptStatic theme={theme} />
+          <TypedText text={entry.content} color={theme.fg} />
         </div>
-      ))}
-      {stage >= 4 && (
-        <>
-          <iframe
-            src="https://www.youtube.com/embed/rlrzUYTXOPI?autoplay=1"
-            title="Secret Profile"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{
-              maxWidth: '400px',
-              width: '100%',
-              aspectRatio: '9 / 16',
-              borderRadius: '8px',
-              border: `1px solid ${theme.border}`,
-            }}
-          />
-          <div className="text-sm" style={{ color: theme.comment }}>
-            You found the secret. Not many visitors get here.
-          </div>
-        </>
+      )}
+
+      {entry.type === 'output' && (
+        <div className="mt-2 mb-4">
+          <CommandContent data={entry.content} theme={theme} onCommand={onCommand} />
+        </div>
+      )}
+
+      {entry.type === 'system' && (
+        <div className="text-sm whitespace-pre-wrap" style={{ color: theme.fg }}>
+          {entry.content}
+        </div>
+      )}
+
+      {entry.type === 'error' && (
+        <div className="text-sm whitespace-pre-wrap" style={{ color: theme.error }}>
+          {entry.content}
+        </div>
       )}
     </div>
   )
-}
+})
 
-function SudoRm({ theme }) {
-  return (
-    <div className="space-y-1.5">
-      <div className="text-sm" style={{ color: theme.error }}>
-        [sudo] password for visitor: ********
-      </div>
-      <div className="text-sm" style={{ color: theme.error }}>
-        Removing /home/visitor/dignity... done
-      </div>
-      <div className="text-sm" style={{ color: theme.error }}>
-        Removing /usr/bin/social-life... done
-      </div>
-      <div className="text-sm" style={{ color: theme.error }}>
-        Removing /var/log/sleep-schedule... done
-      </div>
-      <div className="text-sm mt-3" style={{ color: theme.success }}>
-        Just kidding. This devterminal is indestructible.
-      </div>
-    </div>
-  )
-}
-
-export default function TerminalOutput({ outputs, theme }) {
+function TerminalOutput({ outputs, theme, onCommand }) {
   const bottomRef = useRef(null)
 
   useEffect(() => {
@@ -254,34 +249,11 @@ export default function TerminalOutput({ outputs, theme }) {
       style={{ padding: '20px 15px' }}
     >
       {outputs.map((entry) => (
-        <div key={entry.id} className="output-line">
-          {entry.type === 'command' && (
-            <div className="text-sm flex items-center flex-wrap">
-              <PowerlinePromptStatic theme={theme} />
-              <TypedText text={entry.content} color={theme.fg} />
-            </div>
-          )}
-
-          {entry.type === 'output' && (
-            <div className="mt-2 mb-4">
-              <CommandContent data={entry.content} theme={theme} />
-            </div>
-          )}
-
-          {entry.type === 'system' && (
-            <div className="text-sm whitespace-pre-wrap" style={{ color: theme.fg }}>
-              {entry.content}
-            </div>
-          )}
-
-          {entry.type === 'error' && (
-            <div className="text-sm whitespace-pre-wrap" style={{ color: theme.error }}>
-              {entry.content}
-            </div>
-          )}
-        </div>
+        <OutputEntry key={entry.id} entry={entry} theme={theme} onCommand={onCommand} />
       ))}
       <div ref={bottomRef} />
     </div>
   )
 }
+
+export default memo(TerminalOutput)

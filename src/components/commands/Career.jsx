@@ -1,5 +1,7 @@
 import { resumeData } from '../../data/resume'
 import { getTechColor } from '../../data/techColors'
+import { useLanguage } from '../../i18n/useLanguage'
+import { uiStrings } from '../../i18n/strings'
 
 function TechBadge({ tech, theme }) {
   const color = getTechColor(tech)
@@ -18,10 +20,13 @@ function TechBadge({ tech, theme }) {
 }
 
 export default function Career({ theme }) {
+  const { lang } = useLanguage()
+  const strings = uiStrings[lang].career
+
   return (
     <div>
       <div className="text-base font-semibold mb-5" style={{ color: theme.accent }}>
-        Career Timeline ({resumeData.totalExperience})
+        {strings.title(resumeData.totalExperience)}
       </div>
 
       <div className="space-y-6">
@@ -36,7 +41,7 @@ export default function Career({ theme }) {
                   backgroundColor: expIdx === 0 ? theme.success : theme.prompt,
                 }}
               >
-                {exp.company === 'Freelancer' ? 'Projects' : exp.company}
+                {exp.company === 'Freelancer' ? strings.freelancerLabel : exp.company}
               </div>
               <div className="text-xs sm:text-sm" style={{ color: theme.comment }}>
                 {exp.period} · {exp.duration}
@@ -57,7 +62,7 @@ export default function Career({ theme }) {
                 const isFirst = expIdx === 0 && i === 0
 
                 return (
-                  <div key={proj.name} className="flex">
+                  <div key={proj.name.ko} className="flex">
                     {/* Timeline line */}
                     <div className="flex flex-col items-center shrink-0" style={{ width: '24px' }}>
                       <div
@@ -85,7 +90,7 @@ export default function Career({ theme }) {
                     {/* Content */}
                     <div className="flex-1 min-w-0 pb-6 pl-2">
                       <div className="text-sm font-semibold" style={{ color: theme.fg }}>
-                        {proj.name}
+                        {proj.name[lang]}
                       </div>
                       <div className="text-xs sm:text-sm mt-0.5" style={{ color: theme.prompt }}>
                         {proj.period}
@@ -94,7 +99,7 @@ export default function Career({ theme }) {
                         className="text-xs sm:text-sm mt-1.5 leading-relaxed"
                         style={{ color: theme.comment }}
                       >
-                        {proj.description}
+                        {proj.description[lang]}
                       </div>
                       <div className="flex flex-wrap gap-1.5 mt-2">
                         {proj.tech.map((t) => (

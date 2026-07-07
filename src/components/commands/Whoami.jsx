@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { resumeData } from '../../data/resume'
+import { useLanguage } from '../../i18n/useLanguage'
 
 export default function Whoami({ theme }) {
   const { personal } = resumeData
+  const { lang } = useLanguage()
+  const bio = personal.bio[lang]
+  const tagline = personal.tagline[lang]
   const [visibleSections, setVisibleSections] = useState(0)
   const bottomRef = useRef(null)
-  
+
   useEffect(() => {
-    const totalSections = 4 + personal.bio.length
+    const totalSections = 4 + bio.length
     let current = 0
     const timeout = setTimeout(() => {
       const interval = setInterval(() => {
@@ -18,7 +22,7 @@ export default function Whoami({ theme }) {
       return () => clearInterval(interval)
     }, 200)
     return () => clearTimeout(timeout)
-  }, [personal.bio.length])
+  }, [bio.length])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -45,12 +49,12 @@ export default function Whoami({ theme }) {
 
       {visibleSections >= 3 && (
         <div style={{ color: theme.comment }} className="text-sm italic">
-          {personal.tagline}
+          {tagline}
         </div>
       )}
 
       <div className="space-y-1 mt-3">
-        {personal.bio.map((line, i) => (
+        {bio.map((line, i) => (
           visibleSections >= 4 + i && (
             <div key={i} className="text-sm leading-relaxed" style={{ color: line ? theme.fg : 'transparent' }}>
               {line || '.'}
@@ -59,7 +63,7 @@ export default function Whoami({ theme }) {
         ))}
       </div>
 
-      {visibleSections >= 4 + personal.bio.length && (
+      {visibleSections >= 4 + bio.length && (
         <div className="flex items-center gap-2 mt-3 text-sm" style={{ color: theme.comment }}>
           <span style={{ color: theme.error }}>@</span>
           {personal.location}

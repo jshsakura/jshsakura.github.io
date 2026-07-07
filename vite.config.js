@@ -14,5 +14,19 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/framer-motion')) return 'framer-motion'
+          if (
+            id.includes('node_modules/react-dom') ||
+            id.includes('node_modules/scheduler') ||
+            /node_modules\/react\//.test(id)
+          ) {
+            return 'react-vendor'
+          }
+        },
+      },
+    },
   },
 })

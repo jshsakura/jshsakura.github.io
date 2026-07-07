@@ -116,7 +116,7 @@ const ASCII_ART = [
   '                       /____/      /____/                    ',
 ]
 
-export default function Neofetch({ theme, themeName }) {
+export default function Neofetch({ theme, themeName, onCommand }) {
   const currentTheme = themes[themeName] || themes.default
   const weather = useWeather()
   const visitor = useVisitorInfo()
@@ -142,10 +142,7 @@ export default function Neofetch({ theme, themeName }) {
     { label: 'Last Update', value: __LAST_COMMIT_DATE__ },
   ]
 
-  const palette = [
-    theme.error, theme.success, theme.accent, theme.prompt,
-    theme.comment, theme.border, theme.cursorColor, theme.fg,
-  ]
+  const themeSwatches = Object.entries(themes)
 
   return (
     <div className="flex flex-col gap-5" style={{ padding: '5px' }}>
@@ -180,14 +177,28 @@ export default function Neofetch({ theme, themeName }) {
           </div>
         ))}
 
-        <div className="flex gap-1.5 mt-4">
-          {palette.map((c, i) => (
-            <span
-              key={i}
-              className="inline-block w-5 h-5 rounded-sm"
-              style={{ backgroundColor: c }}
-            />
-          ))}
+        <div className="flex flex-wrap gap-1.5 mt-4">
+          {themeSwatches.map(([key, t]) => {
+            const isCurrent = t.name === theme.name
+            return (
+              <button
+                key={key}
+                type="button"
+                title={t.name}
+                aria-label={`Switch theme to ${t.name}`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onCommand?.(`theme ${key}`)
+                }}
+                className="w-5 h-5 rounded-sm cursor-pointer transition-transform duration-100 hover:scale-125"
+                style={{
+                  background: `linear-gradient(135deg, ${t.prompt} 50%, ${t.accent} 50%)`,
+                  border: isCurrent ? `2px solid ${theme.fg}` : `1px solid ${theme.border}`,
+                  padding: 0,
+                }}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

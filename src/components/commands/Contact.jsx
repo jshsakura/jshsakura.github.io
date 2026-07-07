@@ -1,14 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { resumeData } from '../../data/resume'
+import { useLanguage } from '../../i18n/useLanguage'
+import { uiStrings } from '../../i18n/strings'
 
 const FORMSPREE_URL = 'https://formspree.io/f/mdovkpkg'
 
-function ContactInfo({ theme }) {
+function ContactInfo({ theme, strings }) {
   const { personal } = resumeData
 
   const links = [
     {
-      label: 'GitHub',
+      label: strings.github,
       value: personal.github.replace('https://', ''),
       href: personal.github,
       color: theme.fg,
@@ -19,7 +21,7 @@ function ContactInfo({ theme }) {
       ),
     },
     {
-      label: 'Blog',
+      label: strings.blog,
       value: 'opencourse.kr',
       href: 'https://opencourse.kr',
       color: theme.success,
@@ -32,7 +34,7 @@ function ContactInfo({ theme }) {
       ),
     },
     {
-      label: 'Email',
+      label: strings.email,
       value: personal.email,
       href: `mailto:${personal.email}`,
       color: theme.accent,
@@ -44,7 +46,7 @@ function ContactInfo({ theme }) {
       ),
     },
     {
-      label: 'Location',
+      label: strings.location,
       value: personal.location,
       href: null,
       color: theme.prompt,
@@ -104,7 +106,7 @@ function ContactInfo({ theme }) {
   )
 }
 
-function ContactForm({ theme }) {
+function ContactForm({ theme, strings }) {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState('idle')
   const nameRef = useRef(null)
@@ -163,10 +165,10 @@ function ContactForm({ theme }) {
         }}
       >
         <div className="text-sm font-semibold mb-1" style={{ color: theme.success }}>
-          Message sent!
+          {strings.sentTitle}
         </div>
         <div className="text-sm mb-3" style={{ color: theme.comment }}>
-          Thanks for reaching out. I'll get back to you soon.
+          {strings.sentBody}
         </div>
         <button
           onClick={() => setStatus('idle')}
@@ -178,7 +180,7 @@ function ContactForm({ theme }) {
             border: `1px solid ${theme.accent}40`,
           }}
         >
-          Send another
+          {strings.sendAnother}
         </button>
       </div>
     )
@@ -187,18 +189,18 @@ function ContactForm({ theme }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mt-4" style={{ maxWidth: '520px' }} onClick={(e) => e.stopPropagation()}>
       <div className="text-sm font-semibold" style={{ color: theme.accent, marginBottom: '14px' }}>
-        Send me a message:
+        {strings.formTitle}
       </div>
 
       {status === 'validation' && (
         <div className="text-sm" style={{ color: theme.error }}>
-          All fields are required.
+          {strings.validation}
         </div>
       )}
 
       {status === 'error' && (
         <div className="text-sm" style={{ color: theme.error }}>
-          Failed to send. Please try again or use the email above.
+          {strings.sendError}
         </div>
       )}
 
@@ -212,7 +214,7 @@ function ContactForm({ theme }) {
           style={{ ...inputStyle, padding: '10px 12px' }}
           onFocus={(e) => { e.target.style.borderColor = focusStyle }}
           onBlur={(e) => { e.target.style.borderColor = theme.border }}
-          placeholder="Name"
+          placeholder={strings.namePlaceholder}
         />
         <input
           type="email"
@@ -222,7 +224,7 @@ function ContactForm({ theme }) {
           style={{ ...inputStyle, padding: '10px 12px' }}
           onFocus={(e) => { e.target.style.borderColor = focusStyle }}
           onBlur={(e) => { e.target.style.borderColor = theme.border }}
-          placeholder="Email"
+          placeholder={strings.emailPlaceholder}
         />
       </div>
 
@@ -233,7 +235,7 @@ function ContactForm({ theme }) {
         style={{ ...inputStyle, padding: '10px 12px', minHeight: '100px', marginTop: '14px', marginBottom: '14px' }}
         onFocus={(e) => { e.target.style.borderColor = focusStyle }}
         onBlur={(e) => { e.target.style.borderColor = theme.border }}
-        placeholder="What would you like to discuss?"
+        placeholder={strings.messagePlaceholder}
       />
 
       <button
@@ -247,27 +249,30 @@ function ContactForm({ theme }) {
           border: 'none',
         }}
       >
-        {status === 'sending' ? 'Sending...' : 'Send Message'}
+        {status === 'sending' ? strings.sending : strings.sendMessage}
       </button>
     </form>
   )
 }
 
 export default function Contact({ theme }) {
+  const { lang } = useLanguage()
+  const strings = uiStrings[lang].contact
+
   return (
     <div className="space-y-5">
       <div className="text-base font-semibold" style={{ color: theme.accent }}>
-        Get in Touch
+        {strings.title}
       </div>
 
-      <ContactInfo theme={theme} />
+      <ContactInfo theme={theme} strings={strings} />
 
       <div
         className="h-px w-full my-3"
         style={{ backgroundColor: theme.border, maxWidth: '520px' }}
       />
 
-      <ContactForm theme={theme} />
+      <ContactForm theme={theme} strings={strings} />
     </div>
   )
 }

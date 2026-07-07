@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { isCoarsePointer } from '../utils/pointer'
 
 const charVariants = {
   initial: { opacity: 0, scale: 1.4 },
@@ -70,7 +71,7 @@ function useIsMobile() {
   return isMobile
 }
 
-export default function TerminalInput({ onExecute, onNavigateHistory, onAutocomplete, theme, isFocusRequested }) {
+function TerminalInput({ onExecute, onNavigateHistory, onAutocomplete, theme, isFocusRequested }) {
   const [input, setInput] = useState('')
   const [prevLength, setPrevLength] = useState(0)
   const [cursorPos, setCursorPos] = useState(0)
@@ -78,6 +79,7 @@ export default function TerminalInput({ onExecute, onNavigateHistory, onAutocomp
   const isMobile = useIsMobile()
 
   useEffect(() => {
+    if (isCoarsePointer()) return
     inputRef.current?.focus()
   }, [isFocusRequested])
 
@@ -276,3 +278,5 @@ export default function TerminalInput({ onExecute, onNavigateHistory, onAutocomp
     </div>
   )
 }
+
+export default memo(TerminalInput)
