@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useLanguage } from '../i18n/useLanguage'
 
 const shortcuts = [
   { cmd: 'help', label: 'help', highlight: true },
@@ -13,6 +14,13 @@ const shortcuts = [
 ]
 
 function ShortcutBar({ onCommand, theme }) {
+  const { lang } = useLanguage()
+  const nextLang = lang === 'ko' ? 'en' : 'ko'
+  const chips = [
+    ...shortcuts,
+    { cmd: `lang ${nextLang}`, label: `🌐 ${nextLang.toUpperCase()}`, highlight: true },
+  ]
+
   return (
     <div
       className="shrink-0 flex items-center gap-1.5 overflow-x-auto"
@@ -28,7 +36,7 @@ function ShortcutBar({ onCommand, theme }) {
       <span className="shrink-0 mr-0.5 select-none hidden sm:inline" style={{ color: theme.comment, fontSize: '10px' }}>
         Quick
       </span>
-      {shortcuts.map((s) => (
+      {chips.map((s) => (
         <button
           key={s.cmd}
           onClick={() => onCommand(s.cmd)}
